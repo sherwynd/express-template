@@ -1,0 +1,29 @@
+GET http://localhost:3000/template
+
+###
+
+GET http://localhost:3000/template/65683b9db08b6e3eeda8be0e
+
+###
+
+POST http://localhost:3000/template
+Content-Type: application/json
+
+{
+    "name": "Sherwynd",
+    "age": 21
+}
+
+###
+
+DELETE http://localhost:3000/template/65683dda47d4019497ea37e0
+
+###
+
+PATCH http://localhost:3000/template/6569d3c9fb4c2fd365104cbc
+Content-Type: application/json
+
+{
+    "name": "Jiauyan",
+    "age": 23
+}
