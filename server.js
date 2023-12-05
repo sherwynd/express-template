@@ -11,7 +11,7 @@ db.once('open', () => console.log('Connected to Database'))
 
 app.use(express.json())
 
-const templateRouter = require('./routes/template')
-app.use('/template', templateRouter)
+const router = require('./routers')
+app.use('/', router)
 
 app.listen(3000, () => console.log('Server has started'))

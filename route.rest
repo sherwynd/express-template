@@ -10,7 +10,7 @@ POST http://localhost:3000/template
 Content-Type: application/json
 
 {
-    "name": "Sherwynd",
+    "name": "Sherwynd Liew",
     "age": 21
 }
 
@@ -20,10 +20,13 @@ DELETE http://localhost:3000/template/65683dda47d4019497ea37e0
 
 ###
 
-PATCH http://localhost:3000/template/6569d3c9fb4c2fd365104cbc
+PATCH http://localhost:3000/template/656f3bdba3c9e347c1d4fbb5
 Content-Type: application/json
 
 {
     "name": "Jiauyan",
     "age": 23
 }
+
+###
+GET http://localhost:3000/user
