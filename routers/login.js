@@ -5,7 +5,7 @@ const User = require('../models/user')
 //Get ALL
 router.get('/', async (req, res) => {
     try{
-        const user = await Template.find()
+        const user = await User.find()
         res.json(user)
     } catch (err){
         res.status(500).json({ message: err.message })
@@ -19,7 +19,7 @@ router.get('/:id', getTemplate, (req, res) => {
 
 //Create
 router.post('/', async (req, res) => {
-    const user = new Template({
+    const user = new User({
         // name:req.body.name,
         // age:req.body.age,
     })
@@ -60,7 +60,7 @@ router.delete('/:id', getTemplate, async (req, res) => {
 async function getTemplate(req, res, next) {
     let user
     try {   
-        user = await Template.findById(req.params.id)
+        user = await User.findById(req.params.id)
         if (user == null) {
             return res.status(404).json({ message: 'Cannot find user' })
         }
