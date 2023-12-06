@@ -1,5 +1,37 @@
-import express from 'express'
-import swaggerJsdoc from 'swagger-jsdoc'
-import swaggerUi from 'swagger-ui-express'
-import {version} from '../package.json'
-import log from './logger'
+// const express = require('express') 
+// const swaggerUi = require('swagger-ui-express') 
+// const swaggerJsdoc = require('swagger-jsdoc') 
+
+// const app = express()
+
+// const swaggerOptions = {
+//     swaggerDefintion: {
+//         info: {
+//             title: 'Template API',
+//             version: '1.0.0',
+//             description: 'Template API '
+//         },
+//         servers: [
+//             {
+//                 'http://localhost:3000'
+//             }
+//         ]
+//     },
+//     apis: ['./routers/*.js']
+// }
+
+
+// const swaggerDocs = swaggerJsdoc(      )
+// console.log(swaggerDocs);
+
+// app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
+// /**
+//  * @swagger
+//  * /template:
+//  *      get:
+//  *          description: Get all template
+//  *          response:
+//  *          200:
+//  *              description: Success    
+//  *  */ 
