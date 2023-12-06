@@ -1,40 +1,48 @@
 const mongoose = require('mongoose')
-
+//auth Controller will handle login and signup
 const userLoginSchema = new mongoose.Schema({
-    username: {
+    userName: {
         type: String,
         required:true
     },
-    firstName : {
+    password: {
         type: String,
         required:true
     },
-    lastName : {
-        type: String,
-        required:true
-    },
+    // firstName : {
+    //     type: String,
+    //     required:true
+    // },
+    // lastName : {
+    //     type: String,
+    //     required:true
+    // },
     email: {
         type: String,
         required:true
     },
-    gender : {
+    // gender : {
+    //     type: String,
+    //     required:true
+    // },
+    // phoneNumber : {
+    //     type: Number,
+    //     required:true
+    // },
+    // addressOne : {
+    //     type: String,
+    //     required:true
+    // },
+    // addressTwo : {
+    //     type: String,
+    // },
+    // dateOfBirth : {
+    //     type: Date,
+    //     required:true
+    // },
+    refId: {
         type: String,
-        required:true
-    },
-    phoneNumber : {
-        type: Number,
-        required:true
-    },
-    addressOne : {
-        type: String,
-        required:true
-    },
-    addressTwo : {
-        type: String,
-    },
-    dateOfBirth : {
-        type: Date,
-        required:true
+        required: true
     },
     createdDateTime: {
         type: Date,

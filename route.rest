@@ -29,4 +29,12 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/user
+POST http://localhost:3000/auth/registerAccount
+Content-Type: application/json
+
+{
+
+    "username": "testtest",
+    "email": "carrot@gmail.com",
+    "password": "asd"
+}

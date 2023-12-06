@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+//template for reference
 const templateSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -8,6 +8,10 @@ const templateSchema = new mongoose.Schema({
     age: {
         type: Number,
         required:true
+    },
+    refId: {
+        type: String,
+        required: true
     },
     createdDateTime: {
         type: Date,
