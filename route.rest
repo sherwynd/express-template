@@ -1,40 +1,38 @@
-GET http://localhost:3000/template
-
-###
-
-GET http://localhost:3000/template/65683b9db08b6e3eeda8be0e
-
-###
-
-POST http://localhost:3000/template
-Content-Type: application/json
-
-{
-    "name": "Sherwynd Liew",
-    "age": 21
-}
-
-###
-
-DELETE http://localhost:3000/template/65683dda47d4019497ea37e0
-
-###
-
-PATCH http://localhost:3000/template/656f3bdba3c9e347c1d4fbb5
-Content-Type: application/json
-
-{
-    "name": "Jiauyan",
-    "age": 23
-}
-
-###
 POST http://localhost:3000/auth/registerAccount
 Content-Type: application/json
 
 {
 
-    "username": "testtest",
-    "email": "carrot@gmail.com",
-    "password": "asd"
+    "username": "sherwynd627",
+    "email": "sherwynd627@gmail.com",
+    "password": "627sherwynd"
 }
+
+###
+POST http://localhost:3000/auth/loginAccount
+Content-Type: application/json
+
+{
+
+    "username": "sherwynd627",
+    "email": "sherwynd627@gmail.com",
+    "password": "627sherwynd"
+}
+
+###
+GET http://localhost:3000/auth/
+
+###
+PATCH http://localhost:3000/auth/editAccount/65786f07e4ecfebd2945e336
+Content-Type: application/json
+
+{
+
+    "username": "sherwynd627",
+    "email": "sherwynd627@gmail.com"
+}
+###
+
+DELETE http://localhost:3000/auth/deleteAccount/6578763b811a538863d71d04
+
+###
