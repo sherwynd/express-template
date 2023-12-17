@@ -1,40 +1,58 @@
-GET http://localhost:3000/template
-
-###
-
-GET http://localhost:3000/template/65683b9db08b6e3eeda8be0e
-
-###
-
-POST http://localhost:3000/template
-Content-Type: application/json
-
-{
-    "name": "Sherwynd Liew",
-    "age": 21
-}
-
-###
-
-DELETE http://localhost:3000/template/65683dda47d4019497ea37e0
-
-###
-
-PATCH http://localhost:3000/template/656f3bdba3c9e347c1d4fbb5
-Content-Type: application/json
-
-{
-    "name": "Jiauyan",
-    "age": 23
-}
-
-###
 POST http://localhost:3000/auth/registerAccount
 Content-Type: application/json
 
 {
+    "username": "testAgain",
+    "email": "again@gmail.com",
+    "password": "iloveagain"
+}
 
-    "username": "testtest",
-    "email": "carrot@gmail.com",
-    "password": "asd"
+###
+POST http://localhost:3000/auth/loginAccount
+Content-Type: application/json
+
+# {
+#     "username": "testCarrot",
+#     "email": "carrotlove@gmail.com",
+#     "password": "ilovecarrot"
+# }
+
+{
+    "email": "again@gmail.com",
+    "password": "iloveagain"
+}
+
+###
+GET http://localhost:3000/auth/
+
+###
+GET http://localhost:3000/auth/getToken
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjgwNTk1MSwiZXhwIjoxNzAyODA1OTgxfQ.x9IQ0nSEjutlqN_ZDR4o_nglBvBY3M-XNLZjYt0jma4
+
+###
+POST http://localhost:3000/auth/refreshToken
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjgwNTkxOX0.EKd16-rY_DjraEzZ4GZUAyxpFdETJTQTq5-NbKPIABI"
+}
+
+###
+PATCH http://localhost:3000/auth/editAccount/65786f07e4ecfebd2945e336
+Content-Type: application/json
+
+{
+
+    "username": "sherwynd627",
+    "email": "sherwynd627@gmail.com"
+}
+###
+DELETE http://localhost:3000/auth/deleteAccount/6578763b811a538863d71d04
+
+###
+DELETE http://localhost:3000/auth/logoutAccount
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjgwNTkxOX0.EKd16-rY_DjraEzZ4GZUAyxpFdETJTQTq5-NbKPIABI"
 }
