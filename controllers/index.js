@@ -1,4 +1,4 @@
 module.exports = {
-    template: require('./template'),
-    auth: require('./auth'),
-}
+  template: require("./template"),
+  auth: require("./auth"),
+};

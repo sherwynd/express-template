@@ -2,8 +2,8 @@ POST http://localhost:3000/auth/registerAccount
 Content-Type: application/json
 
 {
-    "username": "testAgain",
-    "email": "again@gmail.com",
+    "username": "t",
+    "email": "again",
     "password": "iloveagain"
 }
 
