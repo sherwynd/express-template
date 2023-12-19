@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 //auth Controller will handle token
 const tokenSchema = new mongoose.Schema({
-  token: {
+  refreshToken: {
+    type: String,
+    required: true,
+  },
+  refId: {
     type: String,
     required: true,
   },

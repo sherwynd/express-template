@@ -2,20 +2,14 @@ POST http://localhost:3000/auth/registerAccount
 Content-Type: application/json
 
 {
-    "username": "t",
-    "email": "again",
-    "password": "iloveagain"
+    "username": "test",
+    "email": "checkduplicate@gmail.com",
+    "password": "aasdw"
 }
 
 ###
 POST http://localhost:3000/auth/loginAccount
 Content-Type: application/json
-
-# {
-#     "username": "testCarrot",
-#     "email": "carrotlove@gmail.com",
-#     "password": "ilovecarrot"
-# }
 
 {
     "email": "again@gmail.com",
@@ -27,14 +21,14 @@ GET http://localhost:3000/auth/
 
 ###
 GET http://localhost:3000/auth/getToken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjgwNTk1MSwiZXhwIjoxNzAyODA1OTgxfQ.x9IQ0nSEjutlqN_ZDR4o_nglBvBY3M-XNLZjYt0jma4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjk4MDQwMiwiZXhwIjoxNzAyOTgwNDMyfQ.EoMnGpDnBcS8ZuKLPqOA0-u6K4xpJ9foiAPH6iiZ6Xo
 
 ###
 POST http://localhost:3000/auth/refreshToken
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjgwNTkxOX0.EKd16-rY_DjraEzZ4GZUAyxpFdETJTQTq5-NbKPIABI"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjk3OTI5MX0.GZwI71pvospSDuPrUE-qAJ_dHVv-qFKDCkqy75H1qZs"
 }
 
 ###

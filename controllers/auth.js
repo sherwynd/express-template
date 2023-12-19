@@ -8,6 +8,14 @@ const jwt = require("jsonwebtoken");
 const registerAccount = async (req, res) => {
   try {
     await validateUser.validateAsync(req.body, { abortEarly: false });
+    const usernameExists = await User.findOne({ username: req.body.username });
+    if (usernameExists) {
+      return res.status(400).json({ message: "Username already taken." });
+    }
+    const emailExists = await User.findOne({ email: req.body.email });
+    if (emailExists) {
+      return res.status(400).json({ message: "Email already in use." });
+    }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = new User({
       username: req.body.username,
@@ -41,15 +49,18 @@ const loginAccount = async (req, res) => {
     }
     const loginUsername = { username: loginUser.username };
     if (await bcrypt.compare(req.body.password, loginUser.password)) {
+      await Token.findOneAndDelete({ refId: loginUser.refId });
       const accessToken = generateAccessToken(loginUsername);
       const refreshToken = jwt.sign(
         loginUsername,
         process.env.REFRESH_TOKEN_SECRET
       );
-      const newToken = new Token({ token: refreshToken });
+      const newToken = new Token({
+        refreshToken: refreshToken,
+        refId: loginUser.refId,
+      });
       await newToken.save();
       res.json({ accessToken: accessToken, refreshToken: refreshToken });
-      // res.send('Login Success')
     } else {
       res.status(500).send("Login Failed");
     }

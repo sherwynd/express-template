@@ -1,31 +1,38 @@
-// const express = require('express') 
-// const swaggerUi = require('swagger-ui-express') 
-// const swaggerJsdoc = require('swagger-jsdoc') 
-
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc = require("swagger-jsdoc");
+const port = process.env.PORT || 3000;
 // const app = express()
 
-// const swaggerOptions = {
-//     swaggerDefintion: {
-//         info: {
-//             title: 'Template API',
-//             version: '1.0.0',
-//             description: 'Template API '
-//         },
-//         servers: [
-//             {
-//                 'http://localhost:3000'
-//             }
-//         ]
-//     },
-//     apis: ['./routers/*.js']
-// }
+const swaggerOptions = {
+  definition: {
+    info: {
+      title: "Auth API",
+      version: "1.0.0",
+      description: "Auth API for login and register",
+      contact: "Sherwynd Liew Li-Yuan",
+    },
+    servers: ["http://localhost:3000"],
+  },
+  apis: ["./routers/*.js"],
+};
 
+const swaggerSpecs = swaggerJsdoc(swaggerOptions);
+function swaggerDocs(app, port) {
+  //Swagger page
+  app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
-// const swaggerDocs = swaggerJsdoc(      )
-// console.log(swaggerDocs);
+  //Docs in JSON format
+  app.get("docs.json", (req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.send(swaggerSpecs);
+  });
 
-// app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+  console.info(`Swagger Docs available at http://localhost:${port}/docs`);
+}
 
+module.exports = {
+  swaggerDocs,
+};
 // /**
 //  * @swagger
 //  * /template:
@@ -33,5 +40,5 @@
 //  *          description: Get all template
 //  *          response:
 //  *          200:
-//  *              description: Success    
-//  *  */ 
+//  *              description: Success
+//  *  */

@@ -5,7 +5,7 @@ const validateUser = Joi.object({
 
   email: Joi.string()
     .max(30)
-    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "my"] } })
     .required(),
 
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
