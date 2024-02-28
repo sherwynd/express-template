@@ -49,7 +49,6 @@ const loginAccount = async (req, res) => {
     }
     const loginUsername = { username: loginUser.username };
     if (await bcrypt.compare(req.body.password, loginUser.password)) {
-      await Token.findOneAndDelete({ refId: loginUser.refId });
       const accessToken = generateAccessToken(loginUsername);
       const refreshToken = jwt.sign(
         loginUsername,
@@ -124,15 +123,10 @@ const refreshToken = async (req, res) => {
     if (refreshToken == null)
       return res.status(401).send("Refresh Token not provided");
 
-    const getToken = await Token.findOne({ token: req.body.token });
+    const getToken = await Token.findOne({ refreshToken: req.body.token });
 
     if (getToken == null)
       return res.status(401).send("Refresh Token not found in data");
-
-    const getRefreshToken = { token: getToken.token };
-
-    if (getRefreshToken == null)
-      return res.status(403).send("Refresh Token is invalid");
 
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
       if (err) return res.status(403).send(err);

@@ -3,8 +3,8 @@ Content-Type: application/json
 
 {
     "username": "test",
-    "email": "checkduplicate@gmail.com",
-    "password": "aasdw"
+    "email": "test1@gmail.com",
+    "password": "test"
 }
 
 ###
@@ -12,23 +12,23 @@ POST http://localhost:3000/auth/loginAccount
 Content-Type: application/json
 
 {
-    "email": "again@gmail.com",
-    "password": "iloveagain"
+    "email": "test1@gmail.com",
+    "password": "test"
 }
 
 ###
-GET http://localhost:3000/auth/
+GET http://localhost:3000/auth/getAccount
 
 ###
 GET http://localhost:3000/auth/getToken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjk4MDQwMiwiZXhwIjoxNzAyOTgwNDMyfQ.EoMnGpDnBcS8ZuKLPqOA0-u6K4xpJ9foiAPH6iiZ6Xo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDkxMTExMTIsImV4cCI6MTcwOTExMTE0Mn0.MP9NfNFX7fGmHpB_QFEdnRntNhuz7zj2jrFp83EEt5g
 
 ###
 POST http://localhost:3000/auth/refreshToken
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjk3OTI5MX0.GZwI71pvospSDuPrUE-qAJ_dHVv-qFKDCkqy75H1qZs"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDkxMTA1OTF9.V2JSM4goZqf-w1CXGUmAt4sBHtbOymGPdZ-TQ1BRbtg"
 }
 
 ###

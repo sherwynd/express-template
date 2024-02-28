@@ -13,7 +13,7 @@ const swaggerOptions = {
     },
     servers: ["http://localhost:3000"],
   },
-  apis: ["./routers/*.js"],
+  apis: ["./routers/*.js", , "./utils/auth.js"],
 };
 
 const swaggerSpecs = swaggerJsdoc(swaggerOptions);
@@ -33,12 +33,3 @@ function swaggerDocs(app, port) {
 module.exports = {
   swaggerDocs,
 };
-// /**
-//  * @swagger
-//  * /template:
-//  *      get:
-//  *          description: Get all template
-//  *          response:
-//  *          200:
-//  *              description: Success
-//  *  */
