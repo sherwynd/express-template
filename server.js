@@ -6,6 +6,7 @@ const app = express();
 const mongoose = require("mongoose");
 const port = process.env.PORT || 3000;
 const { swaggerDocs } = require("./utils/swagger");
+const cors = require("cors");
 
 mongoose.connect("mongodb://127.0.0.1:27017/template", {
   useNewUrlParser: true,
@@ -15,6 +16,7 @@ db.on("error", (err) => console.error(err));
 db.once("open", () => console.log("Connected to Database"));
 
 app.use(express.json());
+app.use(cors());
 
 const router = require("./routers");
 app.use("/", router);
