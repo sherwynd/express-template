@@ -116,6 +116,10 @@ const generateAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "30s" });
 };
 
+const generateResetToken = (user) => {
+  return jwt.sign(user, process.env.RESET_TOKEN_SECRET, { expiresIn: "3600s" });
+};
+
 const refreshToken = async (req, res) => {
   try {
     const refreshToken = req.body.token;
@@ -147,6 +151,20 @@ const logoutAccount = async (req, res) => {
     } else {
       res.status(204).send("Token deleted successfully");
     }
+  } catch (err) {
+    handleErrors(res, err);
+  }
+};
+
+const forgotPassword = async (req, res) => {
+  try {
+    // await validateUser.validateAsync(req.body, { abortEarly: false });
+    const result = await User.findOne({ email: req.body });
+
+    if (!result) {
+      return res.status(400).send("Can't find email address");
+    }
+    const resetToken = generateResetToken({ email: user.email });
   } catch (err) {
     handleErrors(res, err);
   }

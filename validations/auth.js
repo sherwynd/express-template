@@ -21,6 +21,14 @@ const validateUser = Joi.object({
 // .xor('password', 'access_token')
 // .with('password', 'repeat_password')
 
+const validateForgotPasswordUser = Joi.object({
+  email: Joi.string()
+    .max(30)
+    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "my"] } })
+    .required(),
+});
+
 module.exports = {
   validateUser,
+  validateForgotPasswordUser,
 };
