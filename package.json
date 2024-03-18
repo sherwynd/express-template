@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "start": "node build/index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +19,7 @@
     "express-validator": "^7.0.1",
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.0.1",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
@@ -26,6 +29,11 @@
   },
   "devDependencies": {
     "dotenv": "^16.3.1",
+    "eslint": "^8.57.0",
     "nodemon": "^3.0.1"
+  },
+  "_moduleAliases": {
+    "@utils": "src/utils",
+    "@configs": "src/configs"
   }
 }
