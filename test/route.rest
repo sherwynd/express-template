@@ -2,9 +2,9 @@ POST http://localhost:3000/auth/registerAccount
 Content-Type: application/json
 
 {
-    "username": "test",
-    "email": "test1@gmail.com",
-    "password": "test"
+    "username": "asdw",
+    "email": "test5",
+    "password": "as"
 }
 
 ###
@@ -21,7 +21,7 @@ GET http://localhost:3000/auth/getAccount
 
 ###
 GET http://localhost:3000/auth/getToken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDk5OTYxNzQsImV4cCI6MTcwOTk5NjIwNH0.U2jIYGZE1RsOWUeOknEh5M4MKeyTKN2L4LEPcbf91n8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTA3Nzc0NzcsImV4cCI6MTcxMDc3NzUwN30.w6kHlIED_SNfQzIr-8fqnCqyfdQO6kLPmZXvplyHmhw
 
 ###
 POST http://localhost:3000/auth/refreshToken

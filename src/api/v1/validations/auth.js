@@ -11,15 +11,7 @@ const validateUser = Joi.object({
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
 
   repeat_password: Joi.ref("password"),
-
-  // birth_year: Joi.number()
-  //     .integer()
-  //     .min(1900)
-  //     .max(2013),
 });
-// .with('username', 'birth_year')
-// .xor('password', 'access_token')
-// .with('password', 'repeat_password')
 
 const validateForgotPasswordUser = Joi.object({
   email: Joi.string()
