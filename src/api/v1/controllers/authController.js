@@ -1,32 +1,30 @@
-const User = require("../models/user");
-const Token = require("../models/token");
-const bcrypt = require("bcrypt");
-const { v4: uuidv4 } = require("uuid");
-const { validateUser } = require("../validations/auth");
+const Token = require("../models/tokenModel");
 const jwt = require("jsonwebtoken");
 
-const registerAccount = async (req, res) => {
+const { validateUser } = require("../validations/authValidation");
+const authService = require("../services/authService");
+
+const registerAccount = async (req, res, next) => {
   try {
     await validateUser.validateAsync(req.body, { abortEarly: false });
-    const usernameExists = await User.findOne({ username: req.body.username });
+
+    const usernameExists = await authService.checkUsernameExists(
+      req.body.username
+    );
     if (usernameExists) {
-      return res.status(400).json({ message: "Username already taken." });
+      return res.status(400).json({ error: "Username already taken." });
     }
-    const emailExists = await User.findOne({ email: req.body.email });
+
+    const emailExists = await authService.checkEmailExists(req.body.email);
     if (emailExists) {
-      return res.status(400).json({ message: "Email already in use." });
+      return res.status(400).json({ error: "Email already in use." });
     }
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: hashedPassword,
-      refId: uuidv4(),
-    });
-    const account = await newUser.save();
-    res.status(200).json(account);
+
+    const account = await authService.registerAccount(req.body);
+    return res.status(201).json(account);
   } catch (err) {
-    handleErrors(res, err);
+    console.error("Error while registering Account.", err.message);
+    next(err);
   }
 };
 

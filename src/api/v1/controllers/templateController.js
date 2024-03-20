@@ -1,4 +1,4 @@
-const Template = require("../models/template");
+const Template = require("../models/templateModel");
 
 // Getting all
 const getAllTemplate = async (req, res) => {
