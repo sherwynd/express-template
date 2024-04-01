@@ -1,36 +1,40 @@
 const Token = require("../models/tokenModel");
 const jwt = require("jsonwebtoken");
+const UserModel = require("../models/userModel");
 
 const { validateUser } = require("../validations/authValidation");
 const authService = require("../services/authService");
 
 const registerAccount = async (req, res, next) => {
   try {
+    //validation
     await validateUser.validateAsync(req.body, { abortEarly: false });
 
-    const usernameExists = await authService.checkUsernameExists(
-      req.body.username
+    const { username, email, password } = req.body;
+    //services
+    const account = await authService.registerAccount(
+      username,
+      email,
+      password
     );
-    if (usernameExists) {
-      return res.status(400).json({ error: "Username already taken." });
-    }
 
-    const emailExists = await authService.checkEmailExists(req.body.email);
-    if (emailExists) {
-      return res.status(400).json({ error: "Email already in use." });
-    }
-
-    const account = await authService.registerAccount(req.body);
     return res.status(201).json(account);
   } catch (err) {
-    console.error("Error while registering Account.", err.message);
-    next(err);
+    if (
+      err.message === "Username already taken." ||
+      err.message === "Email already taken."
+    ) {
+      return res.status(500).send(err.message);
+    } else {
+      console.error(err);
+      return res.status(500).send("Error while registering Account");
+    }
   }
 };
 
 const getAllAccount = async (req, res) => {
   try {
-    const findUserAll = await User.find();
+    const findUserAll = await authService.getAllAccount();
     res.status(200).json(findUserAll);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -39,139 +43,116 @@ const getAllAccount = async (req, res) => {
 
 const loginAccount = async (req, res) => {
   try {
-    const loginUser = await User.findOne({
-      $or: [{ username: req.body.username }, { email: req.body.email }],
-    });
-    if (!loginUser) {
-      return res.status(400).send("User or Email not found");
-    }
-    const loginUsername = { username: loginUser.username };
-    if (await bcrypt.compare(req.body.password, loginUser.password)) {
-      const accessToken = generateAccessToken(loginUsername);
-      const refreshToken = jwt.sign(
-        loginUsername,
-        process.env.REFRESH_TOKEN_SECRET
-      );
-      const newToken = new Token({
-        refreshToken: refreshToken,
-        refId: loginUser.refId,
-      });
-      await newToken.save();
-      res.json({ accessToken: accessToken, refreshToken: refreshToken });
-    } else {
-      res.status(500).send("Login Failed");
-    }
+    const { username, email, password } = req.body;
+    const { accessToken, refreshToken } = await authService.loginAccount(
+      username,
+      email,
+      password
+    );
+    res.json({ accessToken: accessToken, refreshToken: refreshToken });
   } catch (err) {
-    handleErrors(res, err);
+    if (
+      err.message === "User or Email not found" ||
+      err.message === "Password does not match"
+    ) {
+      return res.status(400).send(err.message);
+    } else {
+      console.error(err);
+      return res.status(500).send("Login Failed");
+    }
   }
 };
 
 const editAccount = async (req, res) => {
   try {
-    const editUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      { new: true }
-    );
-    res.status(200).json(editUser);
+    const { id } = req.params;
+    const { body } = req.body;
+    const editedUser = await authService.editAccount(id, body);
+    res.status(200).json(editedUser);
   } catch (err) {
-    handleErrors(res, err);
+    console.error(err);
+    return res.status(500).send("Edit Account Failed");
   }
 };
 
 const deleteAccount = async (req, res) => {
   try {
-    const deleteUser = await User.findByIdAndDelete(req.params.id);
-    if (deleteUser == null) {
-      res.status(400).send("Cant find User");
-    } else {
-      res.status(200).json(deleteUser);
-    }
+    const { id } = req.params;
+    const { deleteUser } = await authService.deleteAccount(id);
+    res.status(200).json(deleteUser);
   } catch (err) {
-    handleErrors(res, err);
+    console.error(err);
+    return res.status(500).send("Delete Account Failed");
   }
 };
 
 const authenticateToken = async (req, res, next) => {
   try {
-    const findUserAll = await User.find();
     const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
-    if (token == null) return res.status(401).send("Token not provided");
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-      if (err) return res.status(403).send("Token is not valid");
-      req.user = user;
-      res.json(
-        findUserAll.filter((user) => user.username == req.user.username)
-      );
-    });
+    if (!authHeader) {
+      return res.status(401).send("Authorization header is missing");
+    }
+
+    const user = await authService.authenticateToken(authHeader);
+    const findUserAll = await UserModel.find();
+
+    req.user = user;
+    res.json(findUserAll.filter((user) => user.username === req.user.user));
   } catch (err) {
-    handleErrors(res, err);
+    if (
+      err.message === "Token not provided" ||
+      err.message === "Token is not valid"
+    ) {
+      return res.status(401).send(err.message);
+    }
+    console.error(err);
+    return res.status(500).send("Authentication failed");
   }
-};
-
-const generateAccessToken = (user) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "30s" });
-};
-
-const generateResetToken = (user) => {
-  return jwt.sign(user, process.env.RESET_TOKEN_SECRET, { expiresIn: "3600s" });
 };
 
 const refreshToken = async (req, res) => {
   try {
     const refreshToken = req.body.token;
-
-    if (refreshToken == null)
-      return res.status(401).send("Refresh Token not provided");
-
-    const getToken = await Token.findOne({ refreshToken: req.body.token });
-
-    if (getToken == null)
-      return res.status(401).send("Refresh Token not found in data");
-
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-      if (err) return res.status(403).send(err);
-      const accessToken = generateAccessToken({ username: user.username });
-      res.json({ accessToken: accessToken });
-    });
+    const { accessToken } = await authService.refreshToken(refreshToken);
+    res.json({ accessToken });
   } catch (err) {
-    handleErrors(res, err);
+    if (
+      err.message === "Refresh Token not provided" ||
+      err.message === "Refresh Token not found in data"
+    ) {
+      return res.status(401).send(err.message);
+    }
+    console.error(err);
+    return res.status(500).send("Error refreshing token");
   }
 };
 
 const logoutAccount = async (req, res) => {
   try {
-    const result = await Token.deleteOne({ token: req.body.token });
-
-    if (result.deletedCount === 0) {
-      return res.status(400).send("Can't find Token");
-    } else {
-      res.status(204).send("Token deleted successfully");
-    }
+    const { token } = req.body;
+    await authService.logoutAccount(token);
+    res.status(204).send("Token deleted successfully");
   } catch (err) {
-    handleErrors(res, err);
+    if (err.message === "Can't find Token") {
+      return res.status(401).send(err.message);
+    }
+    console.error(err);
+    return res.status(500).send("Error Logging out Account");
   }
 };
 
 const forgotPassword = async (req, res) => {
   try {
     // await validateUser.validateAsync(req.body, { abortEarly: false });
-    const result = await User.findOne({ email: req.body });
-
-    if (!result) {
-      return res.status(400).send("Can't find email address");
-    }
-    const resetToken = generateResetToken({ email: user.email });
+    // const result = await User.findOne({ email: req.body });
+    // const result2 = await User.findOne({ user: req.body });
+    // if (!result) {
+    //   return res.status(400).send("Can't find email address");
+    // }
+    // const resetToken = generateResetToken({ email: user.email });
   } catch (err) {
     handleErrors(res, err);
   }
-};
-
-// Reusable middleware function for handling errors
-const handleErrors = (res, err) => {
-  console.log(err);
-  res.status(500).json(err);
 };
 
 module.exports = {
@@ -181,7 +162,6 @@ module.exports = {
   editAccount,
   deleteAccount,
   authenticateToken,
-  generateAccessToken,
   logoutAccount,
   refreshToken,
 };
