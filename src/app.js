@@ -9,7 +9,6 @@ const app = express();
 //middlewares
 
 //configs
-require("dotenv").config();
 require("module-alias/register");
 
 //routes
