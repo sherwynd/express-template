@@ -10,10 +10,11 @@ const registerAccount = async (req, res, next) => {
     //validation
     await validateUser.validateAsync(req.body, { abortEarly: false });
 
-    const { username, email, password } = req.body;
+    const { username, nickname, email, password } = req.body;
     //services
     const account = await authService.registerAccount(
       username,
+      nickname,
       email,
       password
     );

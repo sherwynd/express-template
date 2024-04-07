@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 
-const registerAccount = async (username, email, password) => {
+const registerAccount = async (username, nickname, email, password) => {
   const existedUsername = await UserModel.findOne({ username });
   if (existedUsername) {
     throw new Error("Username already taken.");
@@ -18,6 +18,7 @@ const registerAccount = async (username, email, password) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = new UserModel({
     username: username,
+    nickname: nickname,
     email: email,
     password: hashedPassword,
     refId: uuidv4(),
