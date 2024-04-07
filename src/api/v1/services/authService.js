@@ -60,6 +60,14 @@ const getAllAccount = async () => {
   return await UserModel.find();
 };
 
+const getAccount = async (refId) => {
+  const getUser = await UserModel.findOne({
+    refId,
+  });
+  if (!getUser) throw error("User not found");
+  return getUser;
+};
+
 const generateAccessToken = (user) => {
   return jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "60s",
@@ -136,12 +144,26 @@ const logoutAccount = async (token) => {
   }
 };
 
-const forgotPassword = async (req, res) => {};
+const findUser = async (username) => {
+  const result = await UserModel.findOne({ username });
+  if (!result) throw error("username not found");
+  return result;
+};
+
+const forgotPassword = async (username, password) => {
+  let result = await UserModel.findOne({ username });
+  const hashedPassword = await bcrypt.hash(password, 10);
+  result.password = hashedPassword;
+  await result.save();
+  if (!result) throw error("Something happneded to your password");
+  return result;
+};
 
 module.exports = {
   registerAccount,
   loginAccount,
   getAllAccount,
+  getAccount,
   generateAccessToken,
   generateResetToken,
   editAccount,
@@ -149,5 +171,6 @@ module.exports = {
   authenticateToken,
   refreshToken,
   logoutAccount,
+  findUser,
   forgotPassword,
 };

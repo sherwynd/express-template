@@ -13,14 +13,6 @@ const userLoginSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // firstName : {
-  //     type: String,
-  //     required:true
-  // },
-  // lastName : {
-  //     type: String,
-  //     required:true
-  // },
   email: {
     type: String,
     required: true,
@@ -29,16 +21,17 @@ const userLoginSchema = new mongoose.Schema({
   //     type: String,
   //     required:true
   // },
+  // userRole : {
+  //     type: String,
+  //     required:true
+  // },
   // phoneNumber : {
   //     type: Number,
   //     required:true
   // },
-  // addressOne : {
+  // address : {
   //     type: String,
   //     required:true
-  // },
-  // addressTwo : {
-  //     type: String,
   // },
   // dateOfBirth : {
   //     type: Date,
@@ -55,4 +48,4 @@ const userLoginSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("UserLogin", userLoginSchema);
+module.exports = mongoose.model("userauths", userLoginSchema);
