@@ -21,7 +21,7 @@ GET http://localhost:3000/auth/getAccount
 
 ###
 GET http://localhost:3000/auth/getToken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdDYiLCJpYXQiOjE3MTA5MjQwMTIsImV4cCI6MTcxMDkyNDA3Mn0.OZBzlmsqEnUCNklfz1KBcujTmR2gbgX1Vfwic-NYAnE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdDYiLCJpYXQiOjE3MTIwNDE5MzEsImV4cCI6MTcxMjA0MTk5MX0.CG_nVPgwFvWmmoLtnSZq5SmU9x2fgLKxXM1ViEte5lI
 
 ###
 POST http://localhost:3000/auth/refreshToken
