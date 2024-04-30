@@ -1,11 +1,11 @@
-const UserModel = require("../models/userModel");
+const UserModel = require("../../models/userModel");
 
 const {
   validateUser,
   validateUsername,
   validateForgotPasswordUser,
-} = require("../validations/authValidation");
-const authService = require("../services/authService");
+} = require("../../validations/authValidation");
+const authService = require("../../services/authService");
 
 const registerAccount = async (req, res, next) => {
   try {
