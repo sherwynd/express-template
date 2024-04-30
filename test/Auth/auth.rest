@@ -1,0 +1,35 @@
+POST http://localhost:3000/auth/registerAccount
+Content-Type: application/json
+
+{
+    "username": "test6",
+    "email": "test6@gmail.com",
+    "nickname": "testName",
+    "password": "test6"
+}
+
+###
+POST http://localhost:3000/auth/loginAccount
+Content-Type: application/json
+
+{
+    "email": "test6@gmail.com",
+    "password": "working"
+}
+
+###
+GET http://localhost:3000/auth/getAccount
+
+###
+GET http://localhost:3000/auth/getAccount/f31338c7-981d-43a6-b68c-78cab22948ca
+Content-Type: application/json
+
+{
+    "refId": "f31338c7-981d-43a6-b68c-78cab22948ca"
+}
+
+###
+GET http://localhost:3000/auth/getToken
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdDYiLCJpYXQiOjE3MTIwNDE5MzEsImV4cCI6MTcxMjA0MTk5MX0.CG_nVPgwFvWmmoLtnSZq5SmU9x2fgLKxXM1ViEte5lI
+
+###

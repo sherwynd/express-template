@@ -1,8 +1,10 @@
-const Token = require("../models/tokenModel");
-const jwt = require("jsonwebtoken");
 const UserModel = require("../models/userModel");
 
-const { validateUser } = require("../validations/authValidation");
+const {
+  validateUser,
+  validateUsername,
+  validateForgotPasswordUser,
+} = require("../validations/authValidation");
 const authService = require("../services/authService");
 
 const registerAccount = async (req, res, next) => {
@@ -37,6 +39,17 @@ const getAllAccount = async (req, res) => {
   try {
     const findUserAll = await authService.getAllAccount();
     res.status(200).json(findUserAll);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+//refId required
+const getAccount = async (req, res) => {
+  const { refId } = req.body;
+  try {
+    const findUser = await authService.getAccount(refId);
+    res.status(200).json(findUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -142,17 +155,32 @@ const logoutAccount = async (req, res) => {
   }
 };
 
+const findUser = async (req, res) => {
+  try {
+    await validateUsername.validateAsync(req.body, { abortEarly: false });
+    const { username } = req.body;
+    const userDetail = await authService.findUser(username);
+    res.status(200).send(userDetail);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("find User Account Failed");
+  }
+};
+
 const forgotPassword = async (req, res) => {
   try {
-    // await validateUser.validateAsync(req.body, { abortEarly: false });
-    // const result = await User.findOne({ email: req.body });
-    // const result2 = await User.findOne({ user: req.body });
-    // if (!result) {
-    //   return res.status(400).send("Can't find email address");
-    // }
-    // const resetToken = generateResetToken({ email: user.email });
+    await validateForgotPasswordUser.validateAsync(req.body, {
+      abortEarly: false,
+    });
+    const { username, password } = req.body;
+    const userNewPassword = await authService.forgotPassword(
+      username,
+      password
+    );
+    res.status(201).send(userNewPassword);
   } catch (err) {
-    handleErrors(res, err);
+    console.error(err);
+    return res.status(500).send("Forgot Password Failed");
   }
 };
 
@@ -160,9 +188,12 @@ module.exports = {
   registerAccount,
   loginAccount,
   getAllAccount,
+  getAccount,
   editAccount,
   deleteAccount,
   authenticateToken,
   logoutAccount,
   refreshToken,
+  findUser,
+  forgotPassword,
 };

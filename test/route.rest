@@ -4,6 +4,7 @@ Content-Type: application/json
 {
     "username": "test6",
     "email": "test6@gmail.com",
+    "nickname": "testName",
     "password": "test6"
 }
 
@@ -13,11 +14,19 @@ Content-Type: application/json
 
 {
     "email": "test6@gmail.com",
-    "password": "test6"
+    "password": "working"
 }
 
 ###
 GET http://localhost:3000/auth/getAccount
+
+###
+GET http://localhost:3000/auth/getAccount/f31338c7-981d-43a6-b68c-78cab22948ca
+Content-Type: application/json
+
+{
+    "refId": "f31338c7-981d-43a6-b68c-78cab22948ca"
+}
 
 ###
 GET http://localhost:3000/auth/getToken
@@ -54,9 +63,18 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/auth/forgotPassword
+GET http://localhost:3000/auth/findUser/f31338c7-981d-43a6-b68c-78cab22948ca
 Content-Type: application/json
 
 {
-    "email": "test"
+    "username": "test6"
+}
+###
+
+POST http://localhost:3000/auth/forgotPassword/f31338c7-981d-43a6-b68c-78cab22948ca
+Content-Type: application/json
+
+{
+    "username": "test6",
+    "password": "working"
 }

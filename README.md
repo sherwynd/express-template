@@ -12,3 +12,10 @@
 # git pull = Pull the git branch to your code
 # git stash = Return to last time the branch kept (Undo)
 # git stash pop = Return to last changes the branch made (Redo)
+
+npm i
+name new file called env
+copy env.example
+
+Test:
+To test code go create (namefile.rest)
