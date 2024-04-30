@@ -4,7 +4,7 @@ const router = express.Router();
 //Validation
 
 //Controller
-const authController = require("../controllers/authController");
+const authController = require("../controllers/auth/authController");
 //auth
 
 router.get("/getAccount", authController.getAllAccount);
