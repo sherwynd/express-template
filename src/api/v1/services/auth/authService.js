@@ -1,5 +1,5 @@
-const UserModel = require("../models/userModel");
-const TokenModel = require("../models/tokenModel");
+const UserModel = require("../../models/auth/userModel");
+const TokenModel = require("../../models/auth/tokenModel");
 
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
