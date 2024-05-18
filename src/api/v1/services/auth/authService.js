@@ -1,9 +1,12 @@
 const UserModel = require("../../models/auth/userModel");
 const TokenModel = require("../../models/auth/tokenModel");
+const ExpireTokenModel = require("../../models/auth/expireTokenModel");
 
+const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const registerAccount = async (username, nickname, email, password) => {
   const existedUsername = await UserModel.findOne({ username });
@@ -144,19 +147,65 @@ const logoutAccount = async (token) => {
   }
 };
 
-const findUser = async (username) => {
+const findUserUsername = async (username) => {
   const result = await UserModel.findOne({ username });
   if (!result) throw error("username not found");
   return result;
 };
 
-const forgotPassword = async (username, password) => {
-  let result = await UserModel.findOne({ username });
-  const hashedPassword = await bcrypt.hash(password, 10);
-  result.password = hashedPassword;
-  await result.save();
-  if (!result) throw error("Something happneded to your password");
+const findUserEmail = async (email) => {
+  const result = await UserModel.findOne({ email });
+  if (!result) throw error("Email not found");
   return result;
+};
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
+
+const forgotPassword = async (email, domain) => {
+  const userFP = await UserModel.findOne({ email });
+  if (!userFP) throw error("Email not found");
+  const resetToken = crypto.randomBytes(20).toString("hex");
+  userFP.resetPasswordToken = resetToken;
+  userFP.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+  await userFP.save();
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: userFP.email,
+    subject: "Password Reset",
+    text:
+      `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
+      `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+      `http://${domain}/resetPassword/${resetToken}\n\n` +
+      `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+  };
+
+  await transporter.sendMail(mailOptions);
+
+  return resetToken;
+};
+
+const resetPassword = async (token, newPassword) => {
+  const user = await UserModel.findOne({
+    resetPasswordToken: token,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+  if (!user) throw new Error("Password reset token is invalid or has expired.");
+
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(newPassword, salt);
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+
+  await user.save();
+
+  return "Password reset successful";
 };
 
 module.exports = {
@@ -171,6 +220,8 @@ module.exports = {
   authenticateToken,
   refreshToken,
   logoutAccount,
-  findUser,
+  findUserUsername,
+  findUserEmail,
   forgotPassword,
+  resetPassword,
 };

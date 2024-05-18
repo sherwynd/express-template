@@ -30,6 +30,6 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/auth/getToken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdDYiLCJpYXQiOjE3MTIwNDE5MzEsImV4cCI6MTcxMjA0MTk5MX0.CG_nVPgwFvWmmoLtnSZq5SmU9x2fgLKxXM1ViEte5lI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdDYiLCJpYXQiOjE3MTUwMDEzMTgsImV4cCI6MTcxNTAwMTM3OH0.1JlRj6x2qK7e97pa3EXtXoiYheguj73mncYAnU7WsT0
 
 ###
