@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema
 
 const productSchema = new schema({
-    name: {
+    title: {
         type: String,
         required: true
     },
@@ -27,10 +27,10 @@ const productSchema = new schema({
         type: String,
         required: true
     },
-    // listed: {
-    //     type: Date,
-    //     default: Date.now
-    // },
+    location: {
+        type: String,
+        required: true
+    },
     acquisition: {
         type: String,
         required: true
@@ -42,12 +42,13 @@ const productSchema = new schema({
     favouriteCount: {
         type: Number,
         default: 0
-    }
-    // img: {
-    //     type: String,
-    //     required: true
-    // },
-    // user_ref: {
+    },
+    imgs: {
+        type: [String],
+        data: Buffer,
+        required: true
+    },
+    // ref_id: {
     //     type: schema.Types.ObjectId,
     //     ref: 'User'
     // }
