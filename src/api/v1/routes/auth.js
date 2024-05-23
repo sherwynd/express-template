@@ -16,7 +16,8 @@ router.post("/loginAccount", authController.loginAccount);
 router.delete("/logoutAccount", authController.logoutAccount);
 router.patch("/editAccount/:refId", authController.editAccount); //Edit Account
 router.get("/findUser/:refId", authController.findUser); //Get username
-router.post("/forgotPassword/:refId", authController.forgotPassword);
+router.post("/forgotPassword", authController.forgotPassword);
+router.post("/resetPassword/:token", authController.resetPassword);
 router.delete("/deleteAccount/:id", authController.deleteAccount);
 
 module.exports = router;
