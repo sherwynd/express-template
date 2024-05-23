@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
     "email": "sherwynd123@gmail.com",
-    "password": "test"
+    "password": "123"
 }
 
 ###
@@ -30,7 +30,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/auth/getToken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoic2hlcnd5bmQiLCJpYXQiOjE3MTYwMzk0MDYsImV4cCI6MTcxNjAzOTQ2Nn0.FF3lJ0MoAUOfwyUcoTQYJB9IucX4wbFCyRUisWeltOc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoic2hlcnd5bmQiLCJpYXQiOjE3MTYyMTY1MjEsImV4cCI6MTcxNjIxNjU0MX0.yC-DBceMoa4x0itCIb5kDZC3R4ZQ_XXI_wzY3RI2bBk
 
 ###
 POST http://localhost:3000/auth/refreshToken
@@ -76,9 +76,9 @@ GET http://localhost:3000/auth/resetPassword
 
 ###
 
-POST http://localhost:3000/auth/resetPassword/84afc528208fa63b4dd9ee98f97bdb8b66681e0c
+POST http://localhost:3000/auth/resetPassword/1c9b16bb90c4985c04df779a4a1dc59de9f57794
 Content-Type: application/json
 
 {
-    "password": "test"
+    "password": "123"
 }

@@ -1,6 +1,7 @@
 const UserModel = require("../../models/auth/userModel");
 const TokenModel = require("../../models/auth/tokenModel");
 const ExpireTokenModel = require("../../models/auth/expireTokenModel");
+const SecretKeyModel = require("../../models/auth/secretKeyModel.js");
 
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
@@ -73,7 +74,7 @@ const getAccount = async (refId) => {
 
 const generateAccessToken = (user) => {
   return jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "60s",
+    expiresIn: "3600s",
   });
 };
 
@@ -171,6 +172,7 @@ const forgotPassword = async (email, domain) => {
   const userFP = await UserModel.findOne({ email });
   if (!userFP) throw error("Email not found");
   const resetToken = crypto.randomBytes(20).toString("hex");
+  const secretKey = crypto.randomBytes(5).toString("hex");
   userFP.resetPasswordToken = resetToken;
   userFP.resetPasswordExpires = Date.now() + 3600000; // 1 hour
   await userFP.save();
@@ -183,23 +185,32 @@ const forgotPassword = async (email, domain) => {
       `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
       `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
       `http://${domain}/resetPassword/${resetToken}\n\n` +
-      `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+      `If you did not request this, please ignore this email and your password will remain unchanged.\n` +
+      `SECRET-KEY:${secretKey}`,
   };
+
+  const newSecret = new SecretKeyModel({
+    secretKey: secretKey,
+    refId: uuidv4(),
+  });
+  await newSecret.save();
 
   await transporter.sendMail(mailOptions);
 
   return resetToken;
 };
 
-const resetPassword = async (token, newPassword) => {
+const resetPassword = async (token, secretKey, newPassword) => {
   const user = await UserModel.findOne({
     resetPasswordToken: token,
     resetPasswordExpires: { $gt: Date.now() },
   });
   if (!user) throw new Error("Password reset token is invalid or has expired.");
-
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(newPassword, salt);
+  const findSecretKey = await SecretKeyModel.findOne({
+    secretKey: secretKey,
+  });
+  if (!findSecretKey) throw new Error("Incorrect Secret Key. ");
+  user.password = await bcrypt.hash(newPassword, 10);
   user.resetPasswordToken = undefined;
   user.resetPasswordExpires = undefined;
 

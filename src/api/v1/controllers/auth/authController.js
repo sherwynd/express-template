@@ -174,9 +174,9 @@ const findUser = async (req, res) => {
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const { host } = req.headers;
-    const userNewPassword = await authService.forgotPassword(email, host);
-    res.status(201).send(userNewPassword);
+    const { origin } = req.headers;
+    const resetToken = await authService.forgotPassword(email, origin);
+    res.status(201).json({ resetToken });
   } catch (err) {
     console.error(err);
     return res.status(500).send("Forgot Password Failed");
@@ -186,9 +186,13 @@ const forgotPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const { token } = req.params;
-    const { password } = req.body;
-    const message = await authService.resetPassword(token, password);
-    res.status(201).send(message);
+    const { secretKey, newPassword } = req.body;
+    const message = await authService.resetPassword(
+      token,
+      secretKey,
+      newPassword
+    );
+    res.status(201).json({ message });
   } catch (err) {
     console.error(err);
     res.status(500).send("Reset Password Failed");

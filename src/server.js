@@ -2,7 +2,7 @@ const app = require("./app"); // Import the express app
 const { connectDatabase } = require("./configs/database");
 const { swaggerDocs } = require("./utils/swagger");
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const start = async () => {
   try {
