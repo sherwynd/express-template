@@ -1,13 +1,6 @@
-<<<<<<< HEAD
-// const UserModel = require("../../models/auth/userModel");
-// const TokenModel = require("../../models/auth/tokenModel");
-// const ExpireTokenModel = require("../../models/auth/expireTokenModel");
-// const SecretKeyModel = require("../../models/auth/secretKeyModel.js");
-=======
 const UserModel = require("../../models/auth/userModel");
 const TokenModel = require("../../models/auth/tokenModel");
 const SecretKeyModel = require("../../models/auth/secretKeyModel.js");
->>>>>>> 9e3e0b927d8ee6cee979ea9d7b852ceea5ff89c6
 
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
