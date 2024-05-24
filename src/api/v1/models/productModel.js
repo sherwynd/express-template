@@ -40,12 +40,11 @@ const productSchema = new schema({
         default: true
     },
     favouriteCount: {
-        type: Number,
-        default: 0
+        type: [String],
+        default: []
     },
     imgs: {
         type: [String],
-        data: Buffer,
         required: true
     },
     // ref_id: {

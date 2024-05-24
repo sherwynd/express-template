@@ -1,7 +1,7 @@
-const UserModel = require("../../models/auth/userModel");
-const TokenModel = require("../../models/auth/tokenModel");
-const ExpireTokenModel = require("../../models/auth/expireTokenModel");
-const SecretKeyModel = require("../../models/auth/secretKeyModel.js");
+// const UserModel = require("../../models/auth/userModel");
+// const TokenModel = require("../../models/auth/tokenModel");
+// const ExpireTokenModel = require("../../models/auth/expireTokenModel");
+// const SecretKeyModel = require("../../models/auth/secretKeyModel.js");
 
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
