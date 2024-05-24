@@ -17,26 +17,12 @@ const userLoginSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // gender : {
-  //     type: String,
-  //     required:true
-  // },
-  // userRole : {
-  //     type: String,
-  //     required:true
-  // },
-  // phoneNumber : {
-  //     type: Number,
-  //     required:true
-  // },
-  // address : {
-  //     type: String,
-  //     required:true
-  // },
-  // dateOfBirth : {
-  //     type: Date,
-  //     required:true
-  // },
+  resetPasswordToken: {
+    type: String,
+  },
+  resetPasswordExpires: {
+    type: Date,
+  },
   refId: {
     type: String,
     required: true,

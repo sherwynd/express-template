@@ -2,10 +2,10 @@ POST http://localhost:3000/auth/registerAccount
 Content-Type: application/json
 
 {
-    "username": "test6",
-    "email": "test6@gmail.com",
-    "nickname": "testName",
-    "password": "test6"
+    "username": "sherwynd",
+    "email": "sherwynd123@gmail.com",
+    "nickname": "lol",
+    "password": "test"
 }
 
 ###
@@ -13,8 +13,8 @@ POST http://localhost:3000/auth/loginAccount
 Content-Type: application/json
 
 {
-    "email": "test6@gmail.com",
-    "password": "working"
+    "email": "sherwynd123@gmail.com",
+    "password": "123"
 }
 
 ###
@@ -30,7 +30,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/auth/getToken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdDYiLCJpYXQiOjE3MTIwNDE5MzEsImV4cCI6MTcxMjA0MTk5MX0.CG_nVPgwFvWmmoLtnSZq5SmU9x2fgLKxXM1ViEte5lI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoic2hlcnd5bmQiLCJpYXQiOjE3MTYyMTY1MjEsImV4cCI6MTcxNjIxNjU0MX0.yC-DBceMoa4x0itCIb5kDZC3R4ZQ_XXI_wzY3RI2bBk
 
 ###
 POST http://localhost:3000/auth/refreshToken
@@ -63,18 +63,22 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/auth/findUser/f31338c7-981d-43a6-b68c-78cab22948ca
+POST http://localhost:3000/auth/forgotPassword
 Content-Type: application/json
 
 {
-    "username": "test6"
+    "email": "sherwynd123@gmail.com"
 }
+
 ###
 
-POST http://localhost:3000/auth/forgotPassword/f31338c7-981d-43a6-b68c-78cab22948ca
+GET http://localhost:3000/auth/resetPassword
+
+###
+
+POST http://localhost:3000/auth/resetPassword/1c9b16bb90c4985c04df779a4a1dc59de9f57794
 Content-Type: application/json
 
 {
-    "username": "test6",
-    "password": "working"
+    "password": "123"
 }
