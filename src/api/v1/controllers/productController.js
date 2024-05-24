@@ -65,13 +65,33 @@ const deleteProduct = async (req, res) => {
 
 // UPDATE an existing product
 const updateProduct = async (req, res) => {
+    
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
         res.status(404).json({error: `Product not found`});
     }
-    const product = await Product.findOneAndUpdate({_id: id},{
-        ...req.body
-    })
+    const updateData = {
+        title: req.body.title,
+        price: req.body.price,
+        description: req.body.description,
+        category: req.body.category,
+        brand: req.body.brand,
+        location: req.body.location,
+        condition: req.body.condition,
+        acquisition: req.body.acquisition,
+        favouriteCount: req.body.favouriteCount,
+    };
+
+    if (req.files && req.files.length > 0) {
+        updateData.imgs = req.files.map(file => file.path);
+    }
+
+    const product = await Product.findOneAndUpdate(
+        {_id: id},
+        updateData,
+        {new: true}
+    )
+
     if (!product) {
         res.status(400).json({error: `Product not found`});
     }
