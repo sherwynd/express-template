@@ -2,12 +2,16 @@ const mongoose = require("mongoose");
 
 const productInvoiceSchema = new mongoose.Schema(
   {
-    product_ref: {
-      type: Number,
+    product_id: {
+      type: String,
       required: true,
     },
-    user_ref: {
-      type: Number,
+    refId: {
+      type: String,
+      required: true,
+    },
+    address_email: {
+      type: String,
       required: true,
     },
     invoice_date: {

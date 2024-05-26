@@ -2,12 +2,16 @@ const mongoose = require("mongoose");
 
 const addressSchema = new mongoose.Schema(
   {
-    address_ref: {
-      type: Number,
+    address_id: {
+      type: String,
       required: true,
     },
-    user_ref: {
-      type: Number,
+    refId: {
+      type: String,
+      required: true,
+    },
+    address_email: {
+      type: String,
       required: true,
     },
     address_name: {
