@@ -65,9 +65,9 @@ const getAllAccount = async () => {
 
 const getAccount = async (refId) => {
   const getUser = await UserModel.findOne({
-    refId,
+    refId: refId,
   });
-  if (!getUser) throw error("User not found");
+  if (!getUser) throw new Error("User not found");
   return getUser;
 };
 
