@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const productInvoiceSchema = new mongoose.Schema(
   {
-    product_id: {
+    productId: {
       type: String,
       required: true,
     },
@@ -12,7 +12,7 @@ const productInvoiceSchema = new mongoose.Schema(
     },
     address_email: {
       type: String,
-      required: true,
+      required: false,
     },
     invoice_date: {
       type: Date,
