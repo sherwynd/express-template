@@ -17,6 +17,15 @@ const userLoginSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phoneNumber: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+  profilePicture: {
+    type: String,
+  },
   resetPasswordToken: {
     type: String,
   },

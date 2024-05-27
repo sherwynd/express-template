@@ -105,12 +105,19 @@ const authenticateToken = async (authHeader) => {
     throw new Error("Token not provided");
   }
 
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+  return new Promise(async (resolve, reject) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
       if (err) {
         reject(new Error("Token is not valid"));
       } else {
-        resolve(user);
+        const findUserAll = await UserModel.find();
+        const result = findUserAll.find(
+          (userItem) => userItem.username === user.user
+        );
+        if (!result) {
+          reject(new Error("User not found"));
+        }
+        resolve(result);
       }
     });
   });
@@ -138,12 +145,12 @@ const refreshToken = async (refreshToken) => {
   });
 };
 
-const logoutAccount = async (token) => {
-  const result = await TokenModel.deleteOne({ token });
+const logoutAccount = async (refreshToken) => {
+  const result = await TokenModel.deleteOne({ refreshToken });
   if (result.deletedCount === 0) {
     throw new Error("Can't find Token");
   } else {
-    return true;
+    return "You have been log out";
   }
 };
 

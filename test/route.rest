@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "username": "sherwynd",
     "email": "sherwynd123@gmail.com",
-    "nickname": "lol",
+    "nickname": "SapnuPuas",
     "password": "test"
 }
 
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
     "email": "sherwynd123@gmail.com",
-    "password": "123"
+    "password": "ggwp"
 }
 
 ###
@@ -30,7 +30,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/auth/getToken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoic2hlcnd5bmQiLCJpYXQiOjE3MTYyMTY1MjEsImV4cCI6MTcxNjIxNjU0MX0.yC-DBceMoa4x0itCIb5kDZC3R4ZQ_XXI_wzY3RI2bBk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoic2hlcnd5bmQiLCJpYXQiOjE3MTY2MzEzNDQsImV4cCI6MTcxNjYzNDk0NH0.zTahVoZzBDr4wOlDw21Z5-Q-612ZXqJmBvOjlvOrH28
 
 ###
 POST http://localhost:3000/auth/refreshToken
@@ -58,7 +58,7 @@ DELETE http://localhost:3000/auth/logoutAccount
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RBZ2FpbiIsImlhdCI6MTcwMjgwNTkxOX0.EKd16-rY_DjraEzZ4GZUAyxpFdETJTQTq5-NbKPIABI"
+    "token": "eyJhbGciOiJIUzI1NiJ9.c2hlcnd5bmQ.WrI9wUZR6r7mhXdvmuN-PfS_8Y7RwBujEkTQLrkQvtw"
 }
 
 ###
