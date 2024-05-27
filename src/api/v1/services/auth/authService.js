@@ -64,6 +64,7 @@ const getAllAccount = async () => {
 };
 
 const getAccount = async (refId) => {
+  if (!refId) throw new Error("refId not provided");
   const getUser = await UserModel.findOne({
     refId,
   });
