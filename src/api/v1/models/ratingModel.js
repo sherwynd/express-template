@@ -10,12 +10,12 @@ const ratingSchema = new schema({
   refId: {
     type: String,
     required: true,
-    min: 1,
-    max: 5,
   },
   ratingValue: {
     type: String,
     required: true,
+    min: 1,
+    max: 5,
   },
   ratingComment: {
     type: String,
