@@ -66,6 +66,16 @@ const eventSchema = new mongoose.Schema({
   //   type: String,
   //   required: true,
   // },
+  createdBy: {
+    type: String,
+    required: true,
+  },
+  subscribers: [
+    {
+      type: String,
+      ref: "userauths",
+    },
+  ],
   createdDateTime: {
     type: Date,
     required: true,
