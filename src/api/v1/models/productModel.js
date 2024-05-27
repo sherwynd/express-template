@@ -1,3 +1,4 @@
+const { required } = require('joi');
 const mongoose = require('mongoose');
 
 const schema = mongoose.Schema
@@ -47,10 +48,10 @@ const productSchema = new schema({
         type: [String],
         required: true
     },
-    // ref_id: {
-    //     type: schema.Types.ObjectId,
-    //     ref: 'User'
-    // }
+    creatorId: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Product', productSchema)

@@ -32,6 +32,10 @@ const userLoginSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
+  favourites: {
+    type: [String],
+    default: []
+  },
 });
 
 module.exports = mongoose.model("userauths", userLoginSchema);

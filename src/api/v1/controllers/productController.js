@@ -27,7 +27,7 @@ const getProduct = async (req, res) => {
 
 // POST a new product
 const createProduct = async (req, res) => {
-    const { title, description, price, condition, category, brand, location, acquisition } = req.body;
+    const { title, description, price, condition, category, brand, location, acquisition, creatorId } = req.body;
     const imgs = req.files.map(file => `uploads/${file.filename}`);
     
     try {
@@ -40,7 +40,8 @@ const createProduct = async (req, res) => {
             brand,
             location,
             acquisition,
-            imgs
+            imgs,
+            creatorId,
         });
         res.status(200).json(product);
     } catch (error) {
