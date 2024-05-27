@@ -26,6 +26,10 @@ const productInvoiceSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    payment_method: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       required: true,

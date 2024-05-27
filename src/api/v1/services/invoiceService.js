@@ -23,6 +23,7 @@ const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
     invoice_date: new Date(),
     invoice_amount: invoiceDetail.invoice_amount,
     invoice_address: invoiceDetail.invoice_address,
+    payment_method: invoiceDetail.payment_method,
     type: invoiceDetail.type,
   };
 
