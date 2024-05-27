@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 // GET all products
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.find({}).sort({createdAt: -1});
+        const products = await Product.find({}).sort({ createdAt: -1 });
         res.status(200).json(products);
     } catch (error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -15,12 +15,12 @@ const getProducts = async (req, res) => {
 const getProduct = async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({error: `Product not found`});
+        res.status(404).json({ error: `Product not found` });
     }
 
     const product = await Product.findById(id)
     if (!product) {
-        res.status(404).json({error: `Product not found`});
+        res.status(404).json({ error: `Product not found` });
     }
     res.status(200).json(product);
 }
@@ -29,7 +29,7 @@ const getProduct = async (req, res) => {
 const createProduct = async (req, res) => {
     const { title, description, price, condition, category, brand, location, acquisition, creatorId } = req.body;
     const imgs = req.files.map(file => `uploads/${file.filename}`);
-    
+
     try {
         const product = await Product.create({
             title,
@@ -45,7 +45,7 @@ const createProduct = async (req, res) => {
         });
         res.status(200).json(product);
     } catch (error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -53,12 +53,12 @@ const createProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({error: `Product not found`});
+        res.status(404).json({ error: `Product not found` });
     }
 
-    const product = await Product.findOneAndDelete({_id: id});
+    const product = await Product.findOneAndDelete({ _id: id });
     if (!product) {
-        res.status(400).json({error: `Product not found`});
+        res.status(400).json({ error: `Product not found` });
     }
 
     res.status(200).json(product);
@@ -66,10 +66,10 @@ const deleteProduct = async (req, res) => {
 
 // UPDATE an existing product
 const updateProduct = async (req, res) => {
-    
+
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({error: `Product not found`});
+        res.status(404).json({ error: `Product not found` });
     }
     const updateData = {
         title: req.body.title,
@@ -88,20 +88,50 @@ const updateProduct = async (req, res) => {
     }
 
     const product = await Product.findOneAndUpdate(
-        {_id: id},
+        { _id: id },
         updateData,
-        {new: true}
+        { new: true }
     )
 
     if (!product) {
-        res.status(400).json({error: `Product not found`});
+        res.status(400).json({ error: `Product not found` });
     }
     res.status(200).json(product);
 }
 
+//get products sell by a user using refId
+const getProductsByUser = async (req, res) => {
+    const { refId } = req.params;
+    if (!refId) return res.status(400).json({ message: err.message });
+    try {
+        const products = await Product.find({ creatorId: refId });
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+const getFavouriteProductsByUser = async (req, res) => {
+    const { refId } = req.params;
+    if (!refId) return res.status(400).json({ message: "refId is required" });
+
+    try {
+        // Find products where the `favourite` array includes `refId`
+        const products = await Product.find({
+            favouriteCount: { $in: [refId] }
+        });
+
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getProducts,
     getProduct,
+    getProductsByUser,
+    getFavouriteProductsByUser,
     createProduct,
     deleteProduct,
     updateProduct
