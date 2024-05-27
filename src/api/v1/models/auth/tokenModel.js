@@ -16,10 +16,7 @@ const tokenSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model(
-  "mongodb+srv://DevFriendOne:dev@friendmou.s35ux3l.mongodb.net/dev",
-  tokenSchema
-);
+module.exports = mongoose.model("tokenauths", tokenSchema);
 
 /**
  *  @openapi
