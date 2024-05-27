@@ -7,6 +7,10 @@ const router = require("./api/v1/routes");
 const app = express();
 
 //middlewares
+app.use(function (req, res, next) {
+  next();
+});
+app.use("/uploads", express.static("src/api/v1/uploads"));
 
 //configs
 require("module-alias/register");
