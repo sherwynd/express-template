@@ -97,6 +97,16 @@ const findAllInvoiceWithProductByUser = async (req, res) => {
   } catch (error) {
     res.status(500).send(error.message);
   }
+};
+
+const removeFavouriteProduct = async (req, res) => {
+  try {
+    const { refId, productId } = req.params;
+    await InvoiceService.removeFavouriteProduct(refId, productId);
+    res.status(200).json({ message: "Product removed from favourites" });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 }
 
 module.exports = {
@@ -108,4 +118,5 @@ module.exports = {
   getAllInvoicesByUser,
   makeInvoiceByUser,
   findAllInvoiceWithProductByUser,
+  removeFavouriteProduct,
 };
