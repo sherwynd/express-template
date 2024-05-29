@@ -8,6 +8,12 @@ const findAllInvoiceByUser = async (refId) => {
   return await ProductInvoice.find({ refId });
 };
 
+const findAllInvoiceWithProductByUser = async (refId) => {
+  const ProductInvoice = await ProductInvoice.find({ refId });
+  const productIds = ProductInvoice.map((invoice) => invoice.product_id);
+  return await Product.find({ _id: { $in: productIds } });
+};
+
 const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
   const user = await userauths.findOne({ refId });
   // need to identify which is the type(passed from fontend)
@@ -39,4 +45,5 @@ const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
 module.exports = {
   findAllInvoiceByUser,
   createInvoiceByUser,
+  findAllInvoiceWithProductByUser,
 };
