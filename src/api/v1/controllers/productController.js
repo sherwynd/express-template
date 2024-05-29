@@ -112,13 +112,15 @@ const getProductsByUser = async (req, res) => {
 }
 
 const getFavouriteProductsByUser = async (req, res) => {
-    const { refId } = req.params;
-    if (!refId) return res.status(400).json({ message: "refId is required" });
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(404).json({ error: `Product not found` });
+    }
 
     try {
-        // Find products where the `favourite` array includes `refId`
+        // Find products where their `favouriteCount` array includes `id`
         const products = await Product.find({
-            favouriteCount: { $in: [refId] }
+            favouriteCount: { $in: [id] }
         });
 
         res.status(200).json(products);
