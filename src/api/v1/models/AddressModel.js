@@ -2,15 +2,7 @@ const mongoose = require("mongoose");
 
 const addressSchema = new mongoose.Schema(
   {
-    address_id: {
-      type: String,
-      required: true,
-    },
     refId: {
-      type: String,
-      required: true,
-    },
-    address_email: {
       type: String,
       required: true,
     },
