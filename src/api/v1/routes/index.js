@@ -10,6 +10,6 @@ router.use("/event", eventRouter);
 router.use("/discover", discoverRouter);
 router.use("/invoice", require("../routes/productInvoice"));
 router.use("/address", require("../routes/addressRoutes"));
-
+router.use("/blogs", require("../routes/blog"));
 
 module.exports = router;
