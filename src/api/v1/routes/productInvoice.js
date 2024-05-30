@@ -7,6 +7,8 @@ const {
   createInvoice,
   updateInvoice,
   deleteInvoice,
+  getAllInvoicesByUser,
+  makeInvoiceByUser,
 } = require("../controllers/productInvoice/productInvoiceController");
 
 // Setting up routes
@@ -15,5 +17,7 @@ router.get("/invoices/:id", getInvoiceById);
 router.post("/invoices", createInvoice);
 router.put("/invoices/:id", updateInvoice);
 router.delete("/invoices/:id", deleteInvoice);
+router.get("/getAllInvoicesByUser/:refId", getAllInvoicesByUser);
+router.post("/makeInvoiceByUser/:refId/:productId", makeInvoiceByUser);
 
 module.exports = router;

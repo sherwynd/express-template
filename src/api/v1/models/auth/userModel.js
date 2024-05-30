@@ -36,10 +36,20 @@ const userLoginSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  eventSubscriptions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+    },
+  ],
   createdDateTime: {
     type: Date,
     required: true,
     default: Date.now,
+  },
+  favourites: {
+    type: [String],
+    default: []
   },
 });
 

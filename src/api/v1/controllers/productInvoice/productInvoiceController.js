@@ -1,5 +1,6 @@
 const ProductInvoice = require("../../models/ProductInvoice");
 const mongoose = require("mongoose");
+const InvoiceService = require("../../services/invoiceService");
 
 // Controller to get all product invoices
 const getAllInvoices = async (req, res) => {
@@ -60,11 +61,39 @@ const deleteInvoice = async (req, res) => {
   }
 };
 
+const getAllInvoicesByUser = async (req, res) => {
+  try {
+    const invoices = await InvoiceService.findAllInvoiceByUser(
+      req.params.refId
+    );
+    res.status(200).json(invoices);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+// Create an invoice and send it by email
+const makeInvoiceByUser = async (req, res) => {
+  try {
+    const { refId, productId } = req.params;
+    const invoiceDetail = req.body;
+    const invoice = await InvoiceService.createInvoiceByUser(
+      refId,
+      productId,
+      invoiceDetail
+    );
+    res.status(201).json(invoice);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
 
 module.exports = {
   getAllInvoices,
   getInvoiceById,
   createInvoice,
   updateInvoice,
-  deleteInvoice
-}
+  deleteInvoice,
+  getAllInvoicesByUser,
+  makeInvoiceByUser,
+};
