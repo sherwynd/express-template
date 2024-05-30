@@ -4,7 +4,11 @@ const productInvoiceSchema = new mongoose.Schema(
   {
     productId: {
       type: String,
-      required: true,
+      required: false,
+    },
+    eventId: {
+      type: String,
+      required: false,
     },
     refId: {
       type: String,

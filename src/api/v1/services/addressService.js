@@ -11,7 +11,7 @@ const getAddressByUser = async (refId) => {
 };
 
 const deleteAddress = async (refId, address_id) => {
-  return await Address.findOneAndDelete({ refId, address_id });
+  return await Address.findOneAndDelete({ refId, _id: address_id });
 };
 
 module.exports = {

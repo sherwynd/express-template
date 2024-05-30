@@ -23,7 +23,7 @@ const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
     const event = await Event.find({ _id: productId });
   }
   const invoiceData = {
-    product_id: productId,
+    productId: productId,
     refId: refId,
     address_email: user.email,
     invoice_date: new Date(),
@@ -47,13 +47,13 @@ const removeFavouriteProduct = async (id, productId) => {
     // Find the user by refId
     const user = await userauths.findOne({ _id: id });
     if (!user) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
 
     // Find the product by productId
-    const product = await Product.findOne({ _id: productId});
+    const product = await Product.findOne({ _id: productId });
     if (!product) {
-      throw new Error('Product not found');
+      throw new Error("Product not found");
     }
 
     // Remove the product ID from user's favourites array
@@ -61,7 +61,7 @@ const removeFavouriteProduct = async (id, productId) => {
     if (userFavouritesIndex > -1) {
       user.favourites.splice(userFavouritesIndex, 1);
     } else {
-      throw new Error('Product not found in user favourites');
+      throw new Error("Product not found in user favourites");
     }
 
     // Remove the user ID from product's favouriteCount array
@@ -69,19 +69,18 @@ const removeFavouriteProduct = async (id, productId) => {
     if (productFavouriteCountIndex > -1) {
       product.favouriteCount.splice(productFavouriteCountIndex, 1);
     } else {
-      throw new Error('User not found in product favouriteCount');
+      throw new Error("User not found in product favouriteCount");
     }
 
     // Save the updated user and product documents
     await user.save();
     await product.save();
 
-    console.log('Favourite product removed successfully');
+    console.log("Favourite product removed successfully");
   } catch (error) {
-    console.error('Error removing favourite product:', error);
+    console.error("Error removing favourite product:", error);
   }
 };
-
 
 module.exports = {
   findAllInvoiceByUser,
