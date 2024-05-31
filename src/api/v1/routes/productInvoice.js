@@ -11,6 +11,7 @@ const {
   makeInvoiceByUser,
   findAllInvoiceWithProductByUser,
   removeFavouriteProduct,
+  findAllInvoiceWithEventByUser,
 } = require("../controllers/productInvoice/productInvoiceController");
 
 // Setting up routes
@@ -23,5 +24,6 @@ router.get("/getAllInvoicesByUser/:refId", getAllInvoicesByUser);
 router.post("/makeInvoiceByUser/:refId/:productId", makeInvoiceByUser);
 router.get("/findAllInvoiceWithProductByUser/:refId", findAllInvoiceWithProductByUser);
 router.delete("/removeFavouriteProduct/:refId/:productId", removeFavouriteProduct);
+router.get("/findAllInvoiceWithEventByUser/:refId", findAllInvoiceWithEventByUser);
 
 module.exports = router;

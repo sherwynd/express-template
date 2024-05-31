@@ -7,15 +7,17 @@ const ratingSchema = new schema({
     type: String,
     required: true,
   },
-  refId: {
+  raterRefId: {
+    type: String,
+    required: true,
+  },
+  productOwner: {
     type: String,
     required: true,
   },
   ratingValue: {
-    type: String,
+    type: Number,
     required: true,
-    min: 1,
-    max: 5,
   },
   ratingComment: {
     type: String,
