@@ -4,12 +4,21 @@ const ratingService = require("../services/ratingService");
 // Create a new rating
 exports.createRating = async (req, res) => {
   try {
-    const { productId, refId, ratingValue, ratingComment } = req.body;
+    const {
+      productId,
+      refId,
+      ratingValue,
+      ratingComment,
+      raterRefId,
+      productOwner,
+    } = req.body;
     const rating = new Rating({
       productId,
       refId,
       ratingValue,
       ratingComment,
+      raterRefId,
+      productOwner,
     });
 
     await rating.save();
