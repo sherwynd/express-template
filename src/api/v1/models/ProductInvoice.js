@@ -28,7 +28,7 @@ const productInvoiceSchema = new mongoose.Schema(
     },
     invoice_address: {
       type: String,
-      required: true,
+      required: false,
     },
     payment_method: {
       type: String,
