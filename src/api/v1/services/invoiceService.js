@@ -8,6 +8,18 @@ const findAllInvoiceByUser = async (refId) => {
   return await ProductInvoice.find({ refId });
 };
 
+const findAllInvoiceWithProductByUser = async (refId) => {
+  const ProductInvoice = await ProductInvoice.find({ refId });
+  const productIds = ProductInvoice.map((invoice) => invoice.product_id);
+  return await Product.find({ _id: { $in: productIds } });
+};
+
+const findAllInvoiceWithEventByUser = async (refId) => {
+  const ProductInvoice = await ProductInvoice.find({ refId });
+  const eventIds = ProductInvoice.map((invoice) => invoice.product_id);
+  return await Event.find({ _id: { $in: eventIds } });
+};
+
 const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
   const user = await userauths.findOne({ refId });
   // need to identify which is the type(passed from fontend)
@@ -17,7 +29,7 @@ const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
     const event = await Event.find({ _id: productId });
   }
   const invoiceData = {
-    product_id: productId,
+    productId: productId,
     refId: refId,
     address_email: user.email,
     invoice_date: new Date(),
@@ -36,7 +48,50 @@ const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
   return invoice;
 };
 
+const removeFavouriteProduct = async (id, productId) => {
+  try {
+    // Find the user by refId
+    const user = await userauths.findOne({ _id: id });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Find the product by productId
+    const product = await Product.findOne({ _id: productId });
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    // Remove the product ID from user's favourites array
+    const userFavouritesIndex = user.favourites.indexOf(productId);
+    if (userFavouritesIndex > -1) {
+      user.favourites.splice(userFavouritesIndex, 1);
+    } else {
+      throw new Error("Product not found in user favourites");
+    }
+
+    // Remove the user ID from product's favouriteCount array
+    const productFavouriteCountIndex = product.favouriteCount.indexOf(user._id);
+    if (productFavouriteCountIndex > -1) {
+      product.favouriteCount.splice(productFavouriteCountIndex, 1);
+    } else {
+      throw new Error("User not found in product favouriteCount");
+    }
+
+    // Save the updated user and product documents
+    await user.save();
+    await product.save();
+
+    console.log("Favourite product removed successfully");
+  } catch (error) {
+    console.error("Error removing favourite product:", error);
+  }
+};
+
 module.exports = {
   findAllInvoiceByUser,
   createInvoiceByUser,
+  findAllInvoiceWithProductByUser,
+  removeFavouriteProduct,
+  findAllInvoiceWithEventByUser,
 };
