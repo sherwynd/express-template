@@ -17,4 +17,8 @@ router.put('/rate/:id', ratingController.updateRating);
 // Delete a rating
 router.delete('/rate/:id', ratingController.deleteRating);
 
+router.get('/allcommentsOfAUser/:raterRefId', ratingController.allcommentsOfAUser);
+
+router.get('/averageRatingOfAUser/:raterRefId', ratingController.averageRatingOfAUser);
+
 module.exports = router;
