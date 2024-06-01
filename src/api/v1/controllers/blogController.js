@@ -50,16 +50,16 @@ const createBlog = async (req, res) => {
 // UPDATE an existing blog
 const updateBlog = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { refId, blogId } = req.params;
 
         // Fetch the blog to check ownership
-        const blog = await Blog.findById(id);
+        const blog = await Blog.findById(blogId);
         if (!blog) {
             return res.status(404).json({ message: "Blog not found" });
         }
 
         // Check if the logged-in user is the owner of the blog
-        if (blog.user.id.toString() !== req.user.id.toString()) {
+        if (blog.creatorId !== refId) {
             return res.status(403).json({ message: "You do not have permission to edit this blog" });
         }
 
@@ -70,7 +70,7 @@ const updateBlog = async (req, res) => {
         };
 
         // Proceed with the update if the user is the owner
-        const updatedBlog = await blogService.updateBlog(id, updateData);
+        const updatedBlog = await blogService.updateBlog(blogId,refId, updateData);
         if (!updatedBlog) {
             return res.status(404).json({ message: "Blog not found" });
         }

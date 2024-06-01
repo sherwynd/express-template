@@ -14,7 +14,7 @@ const {
 router.get("/blogs", getAllBlogs);
 router.get("/blogs/:id", getBlogById);
 router.post("/blogs", upload.array('images', 5), createBlog);
-router.patch("/blogs/:id", updateBlog);
+router.patch("/blogs/:refId/:blogId", updateBlog);
 router.delete("/blogs/:id", deleteBlog);
 
 module.exports = router;

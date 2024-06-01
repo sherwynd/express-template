@@ -17,17 +17,19 @@ const createBlog = async (blogData, userId) => {
 };
 
 // Function to update an existing blog post
-const updateBlog = async (id, userId, blogData) => {
-    const blog = await Blog.findById(id);
+const updateBlog = async (blogId, userId, updateData) => {
+    const blog = await Blog.findById(blogId);
     if (!blog) throw new Error("Blog not found");
-    if (blog.user.id.toString() !== userId) throw new Error("Permission denied");
+    if (blog.creatorId !== userId) {throw new Error("Permission denied")};
 
-    const updateData = {
-        heading: blogData.heading,
-        description: blogData.description,
-    };
+    console.log(blogId, userId, updateData);
+
+    // const updateData = {
+    //     heading: blogData.heading,
+    //     description: blogData.description,
+    // };
     
-    return await Blog.findByIdAndUpdate(id, updateData, { new: true });
+    return await Blog.findByIdAndUpdate(blogId, updateData, { new: true });
 };
 
 // Function to delete a blog post by ID
