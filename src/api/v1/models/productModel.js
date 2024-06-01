@@ -51,6 +51,10 @@ const productSchema = new schema({
     creatorId: {
         type: String,
         required: true
+    },
+    rated: {
+        type: Boolean,
+        required: false
     }
 }, { timestamps: true })
 
