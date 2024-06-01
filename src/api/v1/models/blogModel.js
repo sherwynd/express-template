@@ -6,33 +6,14 @@ const commentSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        user: {
+        refId: {
             type: String,
             required: true,
         },
 }, { timestamps: true });
 
 const blogSchema = new mongoose.Schema({
-    // user: {
-    //     id: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User',
-    //     required: true,
-    //     },
-    //     name: {
-    //     type: String,
-    //     required: true,
-    //     },
-    //     avatar: {
-    //     type: String,
-    //     required: true,
-    //     },
-    // },
-    // createdBy: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User',
-    //     required: true,
-    // },
+
     heading: {
         type: String,
         required: true,
@@ -48,12 +29,18 @@ const blogSchema = new mongoose.Schema({
     comments: {
         type: [commentSchema],
         default: []
-        
     },
     favouriteCount: {
         type: [String],
-        required: true
-        
+        default: []
+    },
+    creatorId: {
+        type: String,
+        required: true,
+    },
+    refId: {
+        type: String,
+        required: true,
     },
 }, { timestamps: true });
 

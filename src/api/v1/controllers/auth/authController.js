@@ -50,7 +50,8 @@ const getAllAccount = async (req, res) => {
 
 //refId required
 const getAccount = async (req, res) => {
-  const { refId } = req.body;
+  const { refId } = req.params;
+  if (!refId) return res.status(400).json({ message: err.message });
   try {
     const findUser = await authService.getAccount(refId);
     res.status(200).json(findUser);
@@ -84,7 +85,7 @@ const loginAccount = async (req, res) => {
 const editAccount = async (req, res) => {
   try {
     const { id } = req.params;
-    const { body } = req.body;
+    const { body } = req;
     const editedUser = await authService.editAccount(id, body);
     res.status(200).json(editedUser);
   } catch (err) {

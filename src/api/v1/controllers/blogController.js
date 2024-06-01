@@ -1,5 +1,7 @@
 const Blog = require("../models/blogModel");
 const blogService = require("../services/blogService");
+const User = require("../models/auth/userModel");
+const mongoose = require("mongoose");
 
 // GET all blogs
 const getAllBlogs = async (req, res) => {
@@ -27,14 +29,17 @@ const getBlogById = async (req, res) => {
 
 // CREATE a new blog
 const createBlog = async (req, res) => {
-    const { heading, description } = req.body;
+    const { heading, description, comments, favouriteCount, creatorId } = req.body;
     const images = req.files.map(file => `uploads/${file.filename}`);
 
     try {
         const blog = await Blog.create({
             heading,
             description,
-            images
+            images,
+            comments,
+            favouriteCount,
+            creatorId
         })
         res.status(200).json(blog);
     } catch (error) {
@@ -81,7 +86,8 @@ const updateBlog = async (req, res) => {
 const deleteBlog = async (req, res) => {
     try {
         const { id } = req.params;
-        const blog = await blogService.deleteBlog(id);
+        // const blog = await blogService.deleteBlog(id);
+        const blog = await Blog.findOneAndDelete({_id: id})
         if (!blog) {
         return res.status(404).json({ message: "Blog not found" });
         }
