@@ -42,10 +42,6 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    creatorId: {
-        type: String,
-        required: true,  
-    },
 }, { timestamps: true });
 
 function arrayLimit(val) {
