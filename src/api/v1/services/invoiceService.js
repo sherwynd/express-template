@@ -22,14 +22,21 @@ const findAllInvoiceWithEventByUser = async (refId) => {
 
 const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
   const user = await userauths.findOne({ refId });
-  // need to identify which is the type(passed from fontend)
-  if ((invoiceDetail.type = "product")) {
-    const product = await Product.find({ _id: productId });
-  } else if ((invoiceDetail.type = "event")) {
-    const event = await Event.find({ _id: productId });
+  let item;
+  let itemType;
+
+  if (invoiceDetail.type === "product") {
+    item = await Product.findById(productId);
+    itemType = "productId";
+  } else if (invoiceDetail.type === "event") {
+    item = await Event.findById(productId);
+    itemType = "eventId";
+  } else {
+    throw new Error("Invalid invoice type");
   }
+
   const invoiceData = {
-    productId: productId,
+    [itemType]: productId,
     refId: refId,
     address_email: user.email,
     invoice_date: new Date(),
@@ -43,7 +50,10 @@ const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
   await invoice.save();
 
   // Send email
-  sendEmail(invoice.address_email, "Invoice From Sport Mou", invoice);
+  sendEmail.sendEmail(invoice.address_email, "Invoice From Sport Mou", invoice);
+  if (invoiceDetail.type === "event") {
+    sendEmail.sendEventReminder(invoice.address_email, productId);
+  }
 
   return invoice;
 };
