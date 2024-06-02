@@ -99,6 +99,17 @@ const findAllInvoiceWithProductByUser = async (req, res) => {
   }
 };
 
+const findAllInvoiceWithEventByUser = async (req, res) => {
+  try {
+    const invoices = await InvoiceService.findAllInvoiceWithEventByUser(
+      req.params.refId
+    );
+    res.status(200).json(invoices);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 const removeFavouriteProduct = async (req, res) => {
   try {
     const { refId, productId } = req.params;
@@ -107,7 +118,7 @@ const removeFavouriteProduct = async (req, res) => {
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};
 
 module.exports = {
   getAllInvoices,
@@ -119,4 +130,5 @@ module.exports = {
   makeInvoiceByUser,
   findAllInvoiceWithProductByUser,
   removeFavouriteProduct,
+  findAllInvoiceWithEventByUser,
 };
