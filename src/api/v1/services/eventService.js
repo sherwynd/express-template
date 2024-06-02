@@ -1,11 +1,31 @@
+const { formatDate, formatTime } = require("../../../utils/formatDateTime");
 const Event = require("../models/eventModel");
 
 const getAllEvents = async () => {
-  return await Event.find();
+  const events = await Event.find();
+
+  const formattedEvents = events.map((event) => ({
+    ...event.toObject(),
+    eventDate: formatDate(event.eventDate),
+    eventTime: formatTime(event.eventTime),
+  }));
+
+  return formattedEvents;
 };
 
 const getEventById = async (id) => {
-  return await Event.findById(id);
+  const event = await Event.findById(id);
+  if (!event) {
+    throw new Error("Event not found");
+  }
+
+  const formattedEvent = {
+    ...event.toObject(),
+    eventDate: formatDate(event.eventDate),
+    eventTime: formatTime(event.eventTime),
+  };
+
+  return formattedEvent;
 };
 
 const createEvent = async (eventData) => {
@@ -49,10 +69,20 @@ const deleteEvent = async (req, res) => {
   }
 };
 
+const getEventsByUser = async (refId) => {
+  const events = await Event.find({ createdBy: refId });
+  return events.map((event) => ({
+    ...event.toObject(),
+    eventDate: formatDate(event.eventDate),
+    eventTime: formatTime(event.eventTime),
+  }));
+};
+
 module.exports = {
   getAllEvents,
   getEventById,
   createEvent,
   updateEvent,
   deleteEvent,
+  getEventsByUser,
 };

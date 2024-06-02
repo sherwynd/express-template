@@ -1,14 +1,24 @@
-const Rating = require('../models/ratingModel');
+const Rating = require("../models/ratingModel");
+const ratingService = require("../services/ratingService");
 
 // Create a new rating
 exports.createRating = async (req, res) => {
   try {
-    const { productId, refId, ratingValue, ratingComment } = req.body;
+    const {
+      productId,
+      refId,
+      ratingValue,
+      ratingComment,
+      raterRefId,
+      productOwner,
+    } = req.body;
     const rating = new Rating({
       productId,
       refId,
       ratingValue,
       ratingComment,
+      raterRefId,
+      productOwner,
     });
 
     await rating.save();
@@ -21,7 +31,9 @@ exports.createRating = async (req, res) => {
 // Get ratings for a product
 exports.getProductRatings = async (req, res) => {
   try {
-    const productRatings = await Rating.find({ productId: req.params.productId });
+    const productRatings = await Rating.find({
+      productId: req.params.productId,
+    });
     res.status(200).json(productRatings);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -62,8 +74,30 @@ exports.deleteRating = async (req, res) => {
     const ratingId = req.params.id;
     await Rating.findByIdAndDelete(ratingId);
 
-    res.status(200).json({ message: 'Rating deleted' });
+    res.status(200).json({ message: "Rating deleted" });
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+};
+
+exports.allcommentsOfAUser = async (req, res) => {
+  try {
+    const { productOwner } = req.params;
+    const ratings = await ratingService.allcommentsOfAUser(productOwner);
+    res.status(200).json(ratings);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+exports.averageRatingOfAUser = async (req, res) => {
+  try {
+    const { productOwner } = req.params;
+    const averageRating = await ratingService.averageRatingOfAUser(
+      productOwner
+    );
+    res.status(200).json(averageRating);
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 };

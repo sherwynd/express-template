@@ -88,6 +88,38 @@ const makeInvoiceByUser = async (req, res) => {
   }
 };
 
+const findAllInvoiceWithProductByUser = async (req, res) => {
+  try {
+    const invoices = await InvoiceService.findAllInvoiceWithProductByUser(
+      req.params.refId
+    );
+    res.status(200).json(invoices);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const findAllInvoiceWithEventByUser = async (req, res) => {
+  try {
+    const invoices = await InvoiceService.findAllInvoiceWithEventByUser(
+      req.params.refId
+    );
+    res.status(200).json(invoices);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const removeFavouriteProduct = async (req, res) => {
+  try {
+    const { refId, productId } = req.params;
+    await InvoiceService.removeFavouriteProduct(refId, productId);
+    res.status(200).json({ message: "Product removed from favourites" });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getAllInvoices,
   getInvoiceById,
@@ -96,4 +128,7 @@ module.exports = {
   deleteInvoice,
   getAllInvoicesByUser,
   makeInvoiceByUser,
+  findAllInvoiceWithProductByUser,
+  removeFavouriteProduct,
+  findAllInvoiceWithEventByUser,
 };
