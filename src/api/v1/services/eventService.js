@@ -69,10 +69,20 @@ const deleteEvent = async (req, res) => {
   }
 };
 
+const getEventsByUser = async (refId) => {
+  const events = await Event.find({ createdBy: refId });
+  return events.map((event) => ({
+    ...event.toObject(),
+    eventDate: formatDate(event.eventDate),
+    eventTime: formatTime(event.eventTime),
+  }));
+};
+
 module.exports = {
   getAllEvents,
   getEventById,
   createEvent,
   updateEvent,
   deleteEvent,
+  getEventsByUser,
 };
