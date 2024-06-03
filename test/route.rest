@@ -2,10 +2,10 @@ POST http://localhost:3000/auth/registerAccount
 Content-Type: application/json
 
 {
-    "username": "sherwynd",
-    "email": "sherwynd123@gmail.com",
-    "nickname": "SapnuPuas",
-    "password": "test"
+    "username": "tiansien123",
+    "email": "tiansien@gmail.com",
+    "nickname": "TSgood",
+    "password": "123456"
 }
 
 ###

@@ -71,7 +71,7 @@ const createBlog = async (req, res) => {
 
 const createComment = async (req, res) => {
   const { id } = req.params;
-  const { text, userId } = req.body;
+  const { text, userId } = req.body.formData;
 
   try {
     const blog = await Blog.findById(id);
@@ -80,16 +80,17 @@ const createComment = async (req, res) => {
     }
 
     const user = await User.findById(userId);
-    if (!blog) {
-      return res.status(404).json({ error: "Blog not found" });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
     const username = user.username;
 
     const comment = { text, username, refId: uuidv4() };
     blog.comments.push(comment);
+    const result = await Blog.findById(id);
     await blog.save();
 
-    res.status(201).json(blog);
+    res.status(201).json(result.comments);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
