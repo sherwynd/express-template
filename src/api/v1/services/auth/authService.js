@@ -72,6 +72,12 @@ const getAccount = async (refId) => {
   return getUser;
 };
 
+const getAccountById = async (id) => {
+  const getUser = await UserModel.findById(id);
+  if (!getUser) throw new Error("User not found");
+  return getUser;
+};
+
 const generateAccessToken = (user) => {
   return jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "3600s",
@@ -231,6 +237,7 @@ module.exports = {
   loginAccount,
   getAllAccount,
   getAccount,
+  getAccountById,
   generateAccessToken,
   generateResetToken,
   editAccount,

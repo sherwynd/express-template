@@ -28,6 +28,8 @@ const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
   if (invoiceDetail.type === "product") {
     item = await Product.findById(productId);
     itemType = "productId";
+    item.isAvailable = false;
+    await item.save();
   } else if (invoiceDetail.type === "event") {
     item = await Event.findById(productId);
     itemType = "eventId";
@@ -91,8 +93,8 @@ const removeFavouriteProduct = async (id, productId) => {
     // Save the updated user and product documents
     await user.save();
     await product.save();
-
-    console.log("Favourite product removed successfully");
+    return product;
+    // console.log("Favourite product removed successfully");
   } catch (error) {
     console.error("Error removing favourite product:", error);
   }
