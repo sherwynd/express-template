@@ -2,6 +2,7 @@ const Blog = require("../models/blogModel");
 const blogService = require("../services/blogService");
 const User = require("../models/auth/userModel");
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 // GET all blogs
 const getAllBlogs = async (req, res) => {
@@ -67,6 +68,26 @@ const createBlog = async (req, res) => {
     }
 };
 
+const createComment = async (req, res) => {
+    const { id } = req.params;
+    const { text } = req.body;
+  
+    try {
+      const blog = await Blog.findById(id);
+      if (!blog) {
+        return res.status(404).json({ error: 'Blog not found' });
+      }
+  
+      const comment = { text, blogId: id, refId: uuidv4() };
+      blog.comments.push(comment);
+      await blog.save();
+  
+      res.status(201).json(blog);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
 // UPDATE an existing blog
 const updateBlog = async (req, res) => {
     try {
@@ -123,4 +144,5 @@ module.exports = {
     createBlog,
     updateBlog,
     deleteBlog,
+    createComment,
  };

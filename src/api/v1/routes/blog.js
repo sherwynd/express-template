@@ -8,6 +8,7 @@ const {
     getBlogById,
     updateBlog,
     deleteBlog,
+    createComment,
     //hideBlog,
 } = require("../controllers/blogController");
 
@@ -16,5 +17,6 @@ router.get("/blogs/:id", getBlogById);
 router.post("/blogs", upload.array('images', 5), createBlog);
 router.patch("/blogs/:refId/:blogId", updateBlog);
 router.delete("/blogs/:id", deleteBlog);
+router.post("/comments/:id", createComment);
 
 module.exports = router;

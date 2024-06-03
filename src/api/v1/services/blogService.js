@@ -20,6 +20,19 @@ const createBlog = async (blogData, userId) => {
     return await blog.save();
 };
 
+const createComment = async (id, commentData) => {
+    const blog = await Blog.findById(id);
+  
+    const comment = {
+      text: commentData.text,
+      refId: commentData.refId,
+    };
+  
+    blog.comments.push(comment);
+    await blog.save();
+    return blog;
+  };
+
 // Function to update an existing blog post
 const updateBlog = async (blogId, userId, updateData) => {
     const blog = await Blog.findById(blogId);
@@ -51,4 +64,5 @@ module.exports = {
   createBlog,
   updateBlog,
   deleteBlog,
+  createComment,
 };
