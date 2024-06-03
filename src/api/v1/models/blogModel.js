@@ -38,10 +38,15 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    refId: {
-        type: String,
-        required: true,
-    },
+    // refId: {
+    //     type: String,
+    //     required: true,
+    // },
+    // isHided: {
+    //     type: [],
+    //     required: true,
+    // },
+    
 }, { timestamps: true });
 
 function arrayLimit(val) {
