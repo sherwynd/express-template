@@ -113,8 +113,8 @@ const findAllInvoiceWithEventByUser = async (req, res) => {
 const removeFavouriteProduct = async (req, res) => {
   try {
     const { refId, productId } = req.params;
-    await InvoiceService.removeFavouriteProduct(refId, productId);
-    res.status(200).json({ message: "Product removed from favourites" });
+    const product = await InvoiceService.removeFavouriteProduct(refId, productId);
+    res.status(200).json(product);
   } catch (error) {
     res.status(500).send(error.message);
   }
