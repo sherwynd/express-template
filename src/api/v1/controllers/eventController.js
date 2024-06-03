@@ -136,6 +136,17 @@ const getEventSubscribers = async (req, res) => {
   }
 };
 
+// GET events by user
+const getEventsByUser = async (req, res) => {
+  try {
+    const { refId } = req.params;
+    const events = await eventService.getEventsByUser(refId);
+    res.status(200).json(events);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllEvents,
   getEventById,
@@ -144,4 +155,5 @@ module.exports = {
   deleteEvent,
   subscribeToEvent,
   getEventSubscribers,
+  getEventsByUser,
 };

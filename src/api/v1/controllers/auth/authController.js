@@ -51,7 +51,6 @@ const getAllAccount = async (req, res) => {
 //refId required
 const getAccount = async (req, res) => {
   const { refId } = req.params;
-  if (!refId) return res.status(400).json({ message: err.message });
   try {
     const findUser = await authService.getAccount(refId);
     res.status(200).json(findUser);

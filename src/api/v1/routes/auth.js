@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../uploadConfig/index");
 
 //Validation
 
@@ -15,7 +16,11 @@ router.post("/refreshToken", authController.refreshToken); //Create New Access T
 router.post("/registerAccount", authController.registerAccount);
 router.post("/loginAccount", authController.loginAccount);
 router.delete("/logoutAccount", authController.logoutAccount);
-router.patch("/editAccount/:id", authController.editAccount); //Edit Account
+router.patch(
+  "/editAccount/:id",
+  upload.single("imgs"),
+  authController.editAccount
+); //Edit Account
 router.get("/findUser/:refId", authController.findUser); //Get username
 router.post("/forgotPassword", authController.forgotPassword);
 router.post("/resetPassword/:token", authController.resetPassword);
