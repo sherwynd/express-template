@@ -147,6 +147,28 @@ const deleteBlog = async (req, res) => {
   }
 };
 
+const toggleLikePost = async (req, res) => {
+  try {
+    const { blogId, refId } = req.params;
+
+    const blog = await blogService.toggleLikePost(blogId, refId);
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const mutePost = async (req, res) => {
+  try {
+    const { blogId, refId } = req.params;
+
+    const blog = await blogService.mutePost(blogId, refId);
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllBlogs,
   getBlogById,
@@ -154,4 +176,6 @@ module.exports = {
   updateBlog,
   deleteBlog,
   createComment,
+  toggleLikePost,
+  mutePost,
 };
