@@ -14,5 +14,6 @@ router.use("/discover", discoverRouter);
 router.use("/invoice", invoice);
 router.use("/address", address);
 router.use("/rating", rating);
+router.use("/blogs", require("../routes/blog"));
 
 module.exports = router;
