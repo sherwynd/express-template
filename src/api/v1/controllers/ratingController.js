@@ -47,7 +47,7 @@ exports.getProductRatings = async (req, res) => {
 // Get ratings by a user
 exports.getUserRatings = async (req, res) => {
   try {
-    const userRatings = await Rating.find({ refId: req.params.refId });
+    const userRatings = await Rating.find({ productOwner: req.params.refId });
     res.status(200).json(userRatings);
   } catch (err) {
     res.status(400).json({ error: err.message });
