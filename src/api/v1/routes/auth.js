@@ -9,6 +9,7 @@ const authController = require("../controllers/auth/authController");
 
 router.get("/getAccount", authController.getAllAccount);
 router.get("/getAccount/:refId", authController.getAccount);
+router.get("/getAccountById/:id", authController.getAccountById);
 router.get("/getToken", authController.authenticateToken); //Get Access Token
 router.post("/refreshToken", authController.refreshToken); //Create New Access Token
 router.post("/registerAccount", authController.registerAccount);

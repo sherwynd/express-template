@@ -60,6 +60,17 @@ const getAccount = async (req, res) => {
   }
 };
 
+const getAccountById = async (req, res) => {
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ message: err.message });
+  try {
+    const findUser = await authService.getAccountById(id);
+    res.status(200).json(findUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+}
+
 const loginAccount = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -205,6 +216,7 @@ module.exports = {
   loginAccount,
   getAllAccount,
   getAccount,
+  getAccountById,
   editAccount,
   deleteAccount,
   authenticateToken,
