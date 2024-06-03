@@ -1,5 +1,6 @@
 const Rating = require("../models/ratingModel");
 const ratingService = require("../services/ratingService");
+const Product = require("../models/productModel");
 
 // Create a new rating
 exports.createRating = async (req, res) => {
@@ -21,6 +22,9 @@ exports.createRating = async (req, res) => {
       productOwner,
     });
 
+    const product = await Product.findById(productId);
+    product.rated = true;
+    await product.save();
     await rating.save();
     res.status(201).json(rating);
   } catch (err) {
@@ -43,7 +47,7 @@ exports.getProductRatings = async (req, res) => {
 // Get ratings by a user
 exports.getUserRatings = async (req, res) => {
   try {
-    const userRatings = await Rating.find({ refId: req.params.refId });
+    const userRatings = await Rating.find({ productOwner: req.params.refId });
     res.status(200).json(userRatings);
   } catch (err) {
     res.status(400).json({ error: err.message });

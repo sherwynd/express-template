@@ -9,14 +9,14 @@ const findAllInvoiceByUser = async (refId) => {
 };
 
 const findAllInvoiceWithProductByUser = async (refId) => {
-  const ProductInvoice = await ProductInvoice.find({ refId });
-  const productIds = ProductInvoice.map((invoice) => invoice.product_id);
+  const productInvoiceData = await ProductInvoice.find({ refId });
+  const productIds = productInvoiceData.map((invoice) => invoice.productId);
   return await Product.find({ _id: { $in: productIds } });
 };
 
 const findAllInvoiceWithEventByUser = async (refId) => {
-  const ProductInvoice = await ProductInvoice.find({ refId });
-  const eventIds = ProductInvoice.map((invoice) => invoice.product_id);
+  const productInvoice = await ProductInvoice.find({ refId });
+  const eventIds = productInvoice.map((invoice) => invoice.eventId);
   return await Event.find({ _id: { $in: eventIds } });
 };
 

@@ -8,7 +8,7 @@ router.post('/rate', ratingController.createRating);
 // Get ratings for a product
 router.get('/product/:productId', ratingController.getProductRatings);
 
-// Get ratings by a user
+// Get ratings by the productOwner
 router.get('/user/:refId', ratingController.getUserRatings);
 
 // Update a rating
@@ -17,8 +17,10 @@ router.put('/rate/:id', ratingController.updateRating);
 // Delete a rating
 router.delete('/rate/:id', ratingController.deleteRating);
 
-router.get('/allcommentsOfAUser/:raterRefId', ratingController.allcommentsOfAUser);
+//This is to get all the ratings by other users to the current user
+router.get('/allcommentsOfAUser/:productOwner', ratingController.allcommentsOfAUser);
 
-router.get('/averageRatingOfAUser/:raterRefId', ratingController.averageRatingOfAUser);
+//This is to get the average rating of the current user (average of all the ratings by other users)
+router.get('/averageRatingOfAUser/:productOwner', ratingController.averageRatingOfAUser);
 
 module.exports = router;
