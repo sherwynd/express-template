@@ -28,6 +28,8 @@ const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
   if (invoiceDetail.type === "product") {
     item = await Product.findById(productId);
     itemType = "productId";
+    item.isAvailable = false;
+    await item.save();
   } else if (invoiceDetail.type === "event") {
     item = await Event.findById(productId);
     itemType = "eventId";
