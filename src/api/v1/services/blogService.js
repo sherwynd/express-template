@@ -7,7 +7,11 @@ const getAllBlogs = async () => {
 
 // Function to get a single blog post by ID
 const getBlogById = async (id) => {
-    
+    return await Blog.findById(id);
+    // console.log("This is Blog ", blod)
+    // if (!blog) {
+    //   throw new Error("Blog not found");
+    // }
 };
 
 // Function to create a new blog post

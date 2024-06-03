@@ -17,14 +17,34 @@ const getAllBlogs = async (req, res) => {
 const getBlogById = async (req, res) => {
     try {
         const { id } = req.params;
+        console.log("this is my ID: ", id);
+        // console.log(`Received ID: ${id}`);
+    
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+          console.log("Invalid ObjectId");
+    
+          res.status(404).json({ error: "Test Blog not found" });
+        }
+    
         const blog = await blogService.getBlogById(id);
         if (!blog) {
-        return res.status(404).json({ message: "Blog not found" });
+          return res.status(404).json({ message: "Blog not found" });
         }
         res.status(200).json(blog);
-    } catch (error) {
+      } catch (error) {
         res.status(500).json({ message: error.message });
-    }
+      }
+    // try
+    //     {
+    //     const { id } = req.params;
+    //     const blog = await blogService.getBlogById(id);
+    //     if (!blog) {
+    //     return res.status(404).json({ message: "Blog not found" });
+    //     }
+    //     res.status(200).json(blog);
+    // } catch (error) {
+    //     res.status(500).json({ message: error.message });
+    // }
 };
 
 // CREATE a new blog
