@@ -1,3 +1,4 @@
+const { formatDate, formatTime } = require("../../../utils/formatDateTime");
 const ProductInvoice = require("../models/ProductInvoice");
 const Product = require("../models/productModel");
 const Event = require("../models/eventModel");
@@ -17,7 +18,12 @@ const findAllInvoiceWithProductByUser = async (refId) => {
 const findAllInvoiceWithEventByUser = async (refId) => {
   const productInvoice = await ProductInvoice.find({ refId });
   const eventIds = productInvoice.map((invoice) => invoice.eventId);
-  return await Event.find({ _id: { $in: eventIds } });
+  const events = await Event.find({ _id: { $in: eventIds } });
+  return events.map((event) => ({
+    ...event.toObject(),
+    eventDate: formatDate(event.eventDate),
+    eventTime: formatTime(event.eventTime),
+  }));
 };
 
 const createInvoiceByUser = async (refId, productId, invoiceDetail) => {
