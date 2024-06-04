@@ -93,8 +93,8 @@ const removeFavouriteProduct = async (id, productId) => {
     // Save the updated user and product documents
     await user.save();
     await product.save();
-
-    console.log("Favourite product removed successfully");
+    return product;
+    // console.log("Favourite product removed successfully");
   } catch (error) {
     console.error("Error removing favourite product:", error);
   }

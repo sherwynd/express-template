@@ -72,6 +72,12 @@ const getAccount = async (refId) => {
   return getUser;
 };
 
+const getAccountById = async (id) => {
+  const getUser = await UserModel.findById(id);
+  if (!getUser) throw new Error("User not found");
+  return getUser;
+};
+
 const generateAccessToken = (user) => {
   return jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "3600s",
@@ -191,7 +197,7 @@ const forgotPassword = async (email, domain) => {
     text:
       `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
       `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
-      `http://${domain}/resetPassword/${resetToken}\n\n` +
+      `${domain}/resetPassword/${resetToken}\n\n` +
       `If you did not request this, please ignore this email and your password will remain unchanged.\n` +
       `SECRET-KEY:${secretKey}`,
   };
@@ -231,6 +237,7 @@ module.exports = {
   loginAccount,
   getAllAccount,
   getAccount,
+  getAccountById,
   generateAccessToken,
   generateResetToken,
   editAccount,
