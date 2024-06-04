@@ -45,14 +45,14 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // refId: {
-    //     type: String,
-    //     required: true,
-    // },
-    // isHided: {
-    //     type: [],
-    //     required: true,
-    // },
+    likeRefId: {
+      type: [String],
+      default: [],
+    },
+    muteBy: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );
