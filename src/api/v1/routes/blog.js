@@ -12,6 +12,7 @@ const {
   toggleLikePost,
   mutePost,
   //hideBlog,
+  getBlogByUserRefId,
 } = require("../controllers/blogController");
 
 router.get("/blogs", getAllBlogs);
@@ -22,5 +23,6 @@ router.delete("/blogs/:id", deleteBlog);
 router.post("/comments/:id", createComment);
 router.patch("/like/:blogId/:refId", toggleLikePost);
 router.patch("/mute/:blogId/:refId", mutePost);
+router.get("/blogsHistory/:refId", getBlogByUserRefId);
 
 module.exports = router;

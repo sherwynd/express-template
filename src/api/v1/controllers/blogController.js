@@ -35,17 +35,22 @@ const getBlogById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-  // try
-  //     {
-  //     const { id } = req.params;
-  //     const blog = await blogService.getBlogById(id);
-  //     if (!blog) {
-  //     return res.status(404).json({ message: "Blog not found" });
-  //     }
-  //     res.status(200).json(blog);
-  // } catch (error) {
-  //     res.status(500).json({ message: error.message });
-  // }
+};
+
+const getBlogByUserRefId = async (req, res) => {
+  try {
+    const { refId } = req.params;
+    if (!refId) {
+      return res.status(404).json({ message: "refId not found" });
+    }
+    const blogHistory = await blogService.getBlogByUserRefId(refId);
+    if (!blogHistory) {
+      return res.status(404).json({ message: "Blog History not found" });
+    }
+    res.status(200).json(blogHistory);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 // CREATE a new blog
@@ -178,4 +183,5 @@ module.exports = {
   createComment,
   toggleLikePost,
   mutePost,
+  getBlogByUserRefId,
 };

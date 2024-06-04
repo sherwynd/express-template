@@ -14,6 +14,13 @@ const getBlogById = async (id) => {
   // }
 };
 
+const getBlogByUserRefId = async (refId) => {
+  const getUser = await Blog.findOne({
+    creatorId: refId,
+  });
+  if (!getUser) throw new Error("User not found");
+  return getUser;
+};
 // Function to create a new blog post
 const createBlog = async (blogData, userId) => {
   const blog = new Blog(blogData);
@@ -115,4 +122,5 @@ module.exports = {
   removeLike,
   toggleLikePost,
   mutePost,
+  getBlogByUserRefId,
 };
