@@ -51,7 +51,7 @@ const eventSchema = new mongoose.Schema({
   },
   participants: {
     type: Number,
-    required: true,
+    required: false,
     default: 0,
   },
   // eventImage: {
