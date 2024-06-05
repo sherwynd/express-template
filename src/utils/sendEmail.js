@@ -23,13 +23,16 @@ const sendEmail = async (to, subject, invoice) => {
 
     let item;
     let itemType;
+    let productOrEventId;
 
     if (invoice.type === "product") {
-      item = await Product.findById(invoice.product_id);
+      item = await Product.findById(invoice.productId);
       itemType = "Product";
+      productOrEventId = invoice.productId;
     } else if (invoice.type === "event") {
-      item = await Event.findById(invoice.product_id);
+      item = await Event.findById(invoice.eventId);
       itemType = "Event";
+      productOrEventId = invoice.eventId;
     }
 
     const emailBody = `
@@ -56,7 +59,7 @@ const sendEmail = async (to, subject, invoice) => {
                 2
               )}</td></tr>
               <tr><td>Invoice Type:  </td><td>${invoice.type}</td></tr>
-              <tr><td>${itemType} ID:  </td><td>${invoice.product_id}</td></tr>
+              <tr><td>${itemType} ID:  </td><td>${productOrEventId}</td></tr>
               <tr><td>Reference ID:  </td><td>${invoice.refId}</td></tr>
             </table>
           </div>
@@ -110,8 +113,12 @@ const sendEventReminder = async (to, eventId) => {
             <p>This is a reminder for the upcoming event you are registered for:</p>
             <table>
               <tr><td>Event Name: </td><td>${event.eventName}</td></tr>
-              <tr><td>Event Description: </td><td>${event.eventDescription}</td></tr>
-              <tr><td>Event Date: </td><td>${new Date(event.eventDate).toDateString()}</td></tr>
+              <tr><td>Event Description: </td><td>${
+                event.eventDescription
+              }</td></tr>
+              <tr><td>Event Date: </td><td>${new Date(
+                event.eventDate
+              ).toDateString()}</td></tr>
               <tr><td>Event Time: </td><td>${event.eventTime}</td></tr>
               <tr><td>Event Location: </td><td>${event.eventLocation}</td></tr>
             </table>
@@ -138,7 +145,6 @@ const sendEventReminder = async (to, eventId) => {
     throw error;
   }
 };
-
 
 module.exports = {
   sendEmail,
